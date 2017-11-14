@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
-from ecweb.views import ec_home, ec_board
+from ecweb.views import ec_home, ec_board, register
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', ec_home),
     url(r'^board/', ec_board),
+    url(r'^register/$', register),
     url(r'^accounts/', include('django.contrib.auth.urls')),
 ]

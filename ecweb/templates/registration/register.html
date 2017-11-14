@@ -1,0 +1,21 @@
+{% extends 'ecweb/base.html' %}
+
+{% block content %}
+
+
+<form method="post" class="post-form" enctype="multipart/form-data">
+  {% csrf_token %}
+<div>
+  <td>First Name: {{ form.first_name }}</td><br>
+  <td>Last Name: {{ form.last_name }}</td><br>
+  <td>Email: {{ form.email }}</td><br>
+  <td>Date Joined: {{ form.date_joined }}</td><br> 
+  <td>Is Staff: {{ form.is_staff }}</td><br> 
+  <td>Avatar: {{ form.avatar }}</td><br> 
+</div>
+  <button type="submit">Save changes</button>
+</form>
+
+
+
+{% endblock %}
