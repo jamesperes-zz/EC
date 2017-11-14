@@ -1,0 +1,4 @@
+Django==1.11.7
+olefile==0.44
+Pillow==4.3.0
+pytz==2017.3
