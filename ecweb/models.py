@@ -6,6 +6,10 @@ from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
 
+class Attendance(models.Model):
+    attendance = models.DateField(blank=True)
+
+
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
@@ -38,6 +42,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff'), default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
+    attendance = models.ManyToManyField(attendance)
+
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
@@ -62,3 +68,4 @@ class ClassRoom(models.Model):
     students = models.ForeignKey(User)
     youtube = models.URLField(blank=True)
     pdf = models.FileField(upload_to="media/", blank=True)
+
