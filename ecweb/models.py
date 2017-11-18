@@ -42,7 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff'), default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
-    attendance = models.ManyToManyField(attendance)
+    attendance = models.ManyToManyField(Attendance)
 
     objects = MyUserManager()
 
@@ -69,3 +69,9 @@ class ClassRoom(models.Model):
     youtube = models.URLField(blank=True)
     pdf = models.FileField(upload_to="media/", blank=True)
 
+class Calendar(models.Model):
+    event = models.TextField()
+    date_start = models.DateField()
+    date_end = models.DateField()
+    title = models.CharField(max_length=30)
+    local = models.CharField(max_length=30)
