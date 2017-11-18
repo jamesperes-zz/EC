@@ -10,9 +10,6 @@ class Attendance(models.Model):
     attendance = models.DateField(blank=True)
 
 
-class Menssage(models.Model):
-    menssage = models.TextField(blank=True)
-
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -74,10 +71,14 @@ class ClassRoom(models.Model):
     pdf = models.FileField(upload_to="media/", blank=True)
 
 
+class Menssage(models.Model):
+    menssage = models.TextField(blank=True)
+    user = models.ForeignKey(User)
+
 class Calendar(models.Model):
     event = models.TextField(blank=True)
-    date_start = models.DateField(blank=True)
-    date_end = models.DateField(blank=True)
+    date_start = models.DateField(blank=True, null=True,)
+    date_end = models.DateField(blank=True, null=True,)
     title = models.CharField(max_length=30, blank=True)
     local = models.CharField(max_length=30, blank=True)
-    menssage = models.ManyToManyField(Menssage)
+    menssage = models.ManyToManyField(Menssage, blank=True)
