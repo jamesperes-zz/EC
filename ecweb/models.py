@@ -10,6 +10,10 @@ class Attendance(models.Model):
     attendance = models.DateField(blank=True)
 
 
+class Menssage(models.Model):
+    menssage = models.TextField(blank=True)
+
+
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
@@ -69,9 +73,11 @@ class ClassRoom(models.Model):
     youtube = models.URLField(blank=True)
     pdf = models.FileField(upload_to="media/", blank=True)
 
+
 class Calendar(models.Model):
-    event = models.TextField()
-    date_start = models.DateField()
-    date_end = models.DateField()
-    title = models.CharField(max_length=30)
-    local = models.CharField(max_length=30)
+    event = models.TextField(blank=True)
+    date_start = models.DateField(blank=True)
+    date_end = models.DateField(blank=True)
+    title = models.CharField(max_length=30, blank=True)
+    local = models.CharField(max_length=30, blank=True)
+    menssage = models.ManyToManyField(Menssage)
