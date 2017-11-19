@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Calendar
+from .models import User, Calendar, Menssage
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -9,6 +9,10 @@ class UserAdmin(admin.ModelAdmin):
 class CalendarAdmin(admin.ModelAdmin):
     pass
 
+class MenssageAdmin(admin.ModelAdmin):
+    pass
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Calendar, CalendarAdmin)
+admin.site.register(Menssage, MenssageAdmin)

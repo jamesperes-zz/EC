@@ -10,7 +10,6 @@ class Attendance(models.Model):
     attendance = models.DateField(blank=True)
 
 
-
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         if not email:
@@ -75,6 +74,14 @@ class Menssage(models.Model):
     menssage = models.TextField(blank=True)
     user = models.ForeignKey(User)
 
+
+class Confirmed(models.Model):
+    user = models.ForeignKey(User)
+    go = models.BooleanField(default=False)
+    dgo = models.BooleanField(default=False)
+    dknow = models.BooleanField(default=False)
+
+
 class Calendar(models.Model):
     event = models.TextField(blank=True)
     date_start = models.DateField(blank=True, null=True,)
@@ -82,3 +89,4 @@ class Calendar(models.Model):
     title = models.CharField(max_length=30, blank=True)
     local = models.CharField(max_length=30, blank=True)
     menssage = models.ManyToManyField(Menssage, blank=True)
+    confirm = models.ManyToManyField(Confirmed, blank=True)

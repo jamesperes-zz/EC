@@ -1,0 +1,21 @@
+{% extends 'ecweb/base.html' %}
+
+{% block content %}
+
+Calendar --- <br>
+
+{% for event in events %}
+
+        <tr>
+          <td>{{event.title}}</td>
+          {% for menssage in event.menssage%}
+          <td>{{menssage.menssage}}</td>
+          <td>{{menssage.user.email}}</td>
+          {%endfor%}
+
+        </tr>
+
+{% endfor %}
+
+
+{% endblock %}

@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm
+
 from django.contrib.auth import logout
+
+from .forms import UserForm
+from .models import Calendar, Menssage
 
 
 def ec_home(request):
@@ -25,7 +28,15 @@ def register(request):
         form = UserForm()
     return render(request, 'registration/register.html', {'form': form})
 
+
 def logout_view(request):
     logout(request)
     return render(request, 'registration/logout.html')
 
+@login_required
+def calendar_view(request):
+    events = Calendar.objects.all()
+    #menssages = Menssage.objects.all()
+
+    return render(request, 'ecweb/calendar.html', {'events': events,
+                                                   })
