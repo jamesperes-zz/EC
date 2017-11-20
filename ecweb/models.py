@@ -32,6 +32,11 @@ class MyUserManager(BaseUserManager):
         return user
 
 
+class StudentTests(models.Model):
+    date_test = models.DateField(blank=True, null=True)
+    grade = models.FloatField(blank=True, null=True)
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
