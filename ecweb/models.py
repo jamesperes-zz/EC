@@ -3,10 +3,14 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from .utils.li import nivel_list
 
 
 class Attendance(models.Model):
     attendance = models.DateField(blank=True)
+
+    def __str__(self):
+        return self.attendance
 
 
 class MyUserManager(BaseUserManager):
@@ -36,6 +40,9 @@ class StudentTests(models.Model):
     date_test = models.DateField(blank=True, null=True)
     grade = models.FloatField(blank=True, null=True)
 
+    def __str__(self):
+        return self.date_test
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
@@ -47,6 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
     attendance = models.ManyToManyField(Attendance)
+    grades = models.ManyToManyField(StudentTests)
 
     objects = MyUserManager()
 
@@ -69,13 +77,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class ClassRoom(models.Model):
+    number_class = models.IntegerField(blank=True)
+    nivel = models.CharField(max_length=30, choices=nivel_list, blank=True)
     students = models.ForeignKey(User)
     youtube = models.URLField(blank=True)
     pdf = models.FileField(upload_to="media/", blank=True)
 
 
 class Menssage(models.Model):
-    menssage = models.TextField(blank=True)
+    menssage_text = models.TextField(blank=True)
     user = models.ForeignKey(User)
 
 
