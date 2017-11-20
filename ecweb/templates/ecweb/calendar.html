@@ -8,13 +8,13 @@ Calendar --- <br>
 
         <tr>
           <td>{{event.title}}</td>
-          {% for menssage in event.menssage%}
-          <td>{{menssage.menssage}}</td>
-          <td>{{menssage.user.email}}</td>
+          {% for menssage in event.menssage.all%}
+          </br>{{menssage.menssage}}
+          </br>{{menssage.user.email}}
           {%endfor%}
 
         </tr>
-
+        <br><br>Confirmed = {{event.confirm.count}}
 {% endfor %}
 
 

@@ -36,7 +36,6 @@ def logout_view(request):
 @login_required
 def calendar_view(request):
     events = Calendar.objects.all()
-    #menssages = Menssage.objects.all()
 
     return render(request, 'ecweb/calendar.html', {'events': events,
                                                    })

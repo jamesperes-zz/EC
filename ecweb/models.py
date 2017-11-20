@@ -3,7 +3,6 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-# Create your models here.
 
 
 class Attendance(models.Model):
