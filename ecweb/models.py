@@ -83,10 +83,16 @@ class ClassRoom(models.Model):
     youtube = models.URLField(blank=True)
     pdf = models.FileField(upload_to="media/", blank=True)
 
+    def __str__(self):
+        return '{}: {}'.format(self.number_class, self.nivel)
+
 
 class Menssage(models.Model):
     menssage_text = models.TextField(blank=True)
     user = models.ForeignKey(User)
+
+    def __str__(self):
+        return self.user.first_name
 
 
 class Confirmed(models.Model):
@@ -94,6 +100,9 @@ class Confirmed(models.Model):
     go = models.BooleanField(default=False)
     dgo = models.BooleanField(default=False)
     dknow = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.user.first_name    
 
 
 class Calendar(models.Model):
@@ -104,3 +113,6 @@ class Calendar(models.Model):
     local = models.CharField(max_length=30, blank=True)
     menssage = models.ManyToManyField(Menssage, blank=True)
     confirm = models.ManyToManyField(Confirmed, blank=True)
+
+    def __str__(self):
+        return self.title
