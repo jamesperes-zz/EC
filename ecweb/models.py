@@ -53,8 +53,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(_('staff'), default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
-    attendance = models.ManyToManyField(Attendance)
-    grades = models.ManyToManyField(StudentTests)
+    attendance = models.ManyToManyField(Attendance, blank=True)
+    grades = models.ManyToManyField(StudentTests, blank=True)
 
     objects = MyUserManager()
 
