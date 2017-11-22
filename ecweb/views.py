@@ -16,6 +16,10 @@ def ec_home(request):
 def ec_board(request):
     return render(request, 'ecweb/board.html')
 
+@login_required
+def blank_test(request):
+    return render(request, 'ecweb/blank_page.html')    
+
 
 def register(request):
 
