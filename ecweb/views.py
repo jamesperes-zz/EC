@@ -16,9 +16,12 @@ def ec_home(request):
 def ec_board(request):
     return render(request, 'ecweb/board.html')
 
+
 @login_required
 def blank_test(request):
-    return render(request, 'ecweb/blank_page.html')    
+    current_user = request.user
+    return render(request, 'ecweb/blank_page.html',
+                  {'current_user': current_user})
 
 
 def register(request):
@@ -36,6 +39,7 @@ def register(request):
 def logout_view(request):
     logout(request)
     return render(request, 'registration/logout.html')
+
 
 @login_required
 def calendar_view(request):

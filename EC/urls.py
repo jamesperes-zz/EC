@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
 from ecweb.views import ec_home, ec_board, register, logout_view, calendar_view, blank_test
@@ -28,4 +29,4 @@ urlpatterns = [
     url(r'^logout/$', logout_view),
     url(r'^accounts/', include('django.contrib.auth.urls')),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
