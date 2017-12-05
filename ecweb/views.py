@@ -18,10 +18,18 @@ def ec_board(request):
 
 
 @login_required
-def blank_test(request):
+def home_dashboard(request):
     current_user = request.user
-    return render(request, 'ecweb/blank_page.html',
+    return render(request, 'ecweb/dashboard.html',
                   {'current_user': current_user})
+
+
+@login_required
+def user_detail(request):
+    current_user = request.user
+    return render(request, 'ecweb/student.html',
+                  {'current_user': current_user})
+
 
 
 def register(request):

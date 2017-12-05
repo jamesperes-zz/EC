@@ -1,7 +1,11 @@
-{% load staticfiles %}
-{% extends 'ecweb/base_admin.html' %}
+{% extends 'ecweb/baseadmin.html' %}
 
 {% block content %}
+
+{{current_user.first_name}}
+
+
+{{current_user.last_name}}
 
 
 {% endblock %}

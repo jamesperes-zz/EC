@@ -17,12 +17,14 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
-from ecweb.views import ec_home, ec_board, register, logout_view, calendar_view, blank_test
+from ecweb.views import (ec_home, ec_board, register, logout_view,
+                         calendar_view, home_dashboard, user_detail)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', ec_home),
-    url(r'^blank/', blank_test, name='blank_test'),
+    url(r'^dashboard/', home_dashboard, name='home_dashboard'),
+    url(r'^student/', user_detail, name='user_detail'),
     url(r'^board/', ec_board, name='board'),
     url(r'^register/$', register),
     url(r'^calendar/$', calendar_view, name='calendar_view'),
