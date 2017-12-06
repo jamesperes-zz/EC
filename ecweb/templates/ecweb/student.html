@@ -1,11 +1,14 @@
 {% extends 'ecweb/baseadmin.html' %}
 
 {% block content %}
-
-{{current_user.first_name}}
-
-
-{{current_user.last_name}}
-
+<center>
+                <div class="user-info">
+                    <img src="{{ current_user.avatar.url}}" class="rounded-circle" alt="" width="304" height="236">
+                    <br><br><br>
+                    <p class="name">{{current_user.first_name}}</p>
+                    <p class="designation">{{current_user.last_name}}</p>
+                    <span class="online"></span>
+                </div>
+</center>
 
 {% endblock %}
