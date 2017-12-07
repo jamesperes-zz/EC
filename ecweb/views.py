@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import logout
 
-from .forms import UserForm
-from .models import Calendar, Menssage
+from .forms import UserForm, PhotoForm
+from .models import Calendar, Menssage, User
 
 
 def ec_home(request):
@@ -27,8 +27,19 @@ def home_dashboard(request):
 @login_required
 def user_detail(request):
     current_user = request.user
+    insta = get_object_or_404(User, pk=int(current_user.id))
+    if request.method == 'POST':
+        form = PhotoForm(request.POST, request.FILES, instance=insta)
+        if form.is_valid():
+            profil = form.save()
+            profil.user = current_user
+            profil.save()
+
+            return redirect('user_detail')
+    else:
+        form = PhotoForm()
     return render(request, 'ecweb/student.html',
-                  {'current_user': current_user})
+                  {'current_user': current_user, 'form': form})
 
 
 

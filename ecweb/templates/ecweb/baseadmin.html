@@ -11,6 +11,8 @@
       <link rel="stylesheet" href="{% static '/node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css' %}" />
       <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
       <link rel="shortcut icon" href="{% static '/images/favicon.png' %}"/>
+{% block head %}{% endblock %}
+
   </head>
   <body>
       <div class=" container-scroller">
@@ -181,6 +183,7 @@
       <script src="{% static  '/js/off-canvas.js' %}"></script>
       <script src="{% static  '/js/hoverable-collapse.js' %}"></script>
       <script src="{% static  '/js/misc.js' %}"></script>
+      {% block js %}{% endblock %}
   </body>
 
 </html>
