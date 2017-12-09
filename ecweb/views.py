@@ -42,9 +42,7 @@ def user_detail(request):
                   {'current_user': current_user, 'form': form})
 
 
-
 def register(request):
-
     if request.method == "POST":
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
@@ -64,5 +62,4 @@ def logout_view(request):
 def calendar_view(request):
     events = Calendar.objects.all()
 
-    return render(request, 'ecweb/calendar.html', {'events': events,
-                                                   })
+    return render(request, 'ecweb/calendar.html', {'events': events})

@@ -81,7 +81,10 @@
 <div class="container">
   <form method="post" enctype="multipart/form-data" id="formUpload">
     {% csrf_token %}
-    {{ form }}
+    <label for="your_name">Edit:  </label>
+    <input id="your_name" type="image" name="your_name" value="{{ form.as_p }}">
+
+
   </form>
 
    <!-- MODAL TO CROP THE IMAGE -->
