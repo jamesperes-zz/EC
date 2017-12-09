@@ -49,7 +49,11 @@
                 <div class="user-info">
                     <img src="{{ current_user.avatar.url}}" alt="">
                     <p class="name">{{current_user.first_name}}</p>
-                    <p class="designation">{{current_user.last_name}}</p>
+                    {% if current_user.is_staff == True%}
+                    <p class="designation">Staff</p>
+                    {% else %}
+                    <p class="designation">Student</p>
+                    {% endif %}
                     <span class="online"></span>
                 </div>
                     <ul class="nav">
