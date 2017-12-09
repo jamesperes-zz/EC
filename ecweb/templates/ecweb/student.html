@@ -81,8 +81,7 @@
 <div class="container">
   <form method="post" enctype="multipart/form-data" id="formUpload">
     {% csrf_token %}
-    <label for="your_name">Edit:  </label>
-    <input id="your_name" type="image" name="your_name" value="{{ form.as_p }}">
+    {{ form.as_p }}
 
 
   </form>
@@ -121,7 +120,11 @@
 
                     <br><br><br>
                     <p class="name">{{current_user.first_name}}</p>
-                    <p class="designation">{{current_user.last_name}}</p>
+                    {% if current_user.is_staff == True%}
+                    <p class="designation">Staff</p>
+                    {% else %}
+                    <p class="designation">Student</p>
+                    {% endif %}
                     <span class="online"></span>
                 </div>
 </center>
