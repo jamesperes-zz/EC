@@ -102,7 +102,7 @@ class Confirmed(models.Model):
     dknow = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.first_name    
+        return self.user.first_name
 
 
 class Calendar(models.Model):
