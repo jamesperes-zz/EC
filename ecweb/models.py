@@ -91,14 +91,14 @@ class ClassRoom(models.Model):
 
 class Menssage(models.Model):
     menssage_text = models.TextField(blank=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.first_name
 
 
 class Confirmed(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     go = models.BooleanField(default=False)
     dgo = models.BooleanField(default=False)
     dknow = models.BooleanField(default=False)
