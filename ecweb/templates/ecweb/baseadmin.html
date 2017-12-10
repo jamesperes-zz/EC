@@ -31,8 +31,11 @@
                     <li class="nav-item">
                         <a class="nav-link profile-pic" href="#"><img class="rounded-circle" src="{{ current_user.avatar.url}}" alt=""></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa fa-th"></i></a>
+                    <li class="nav-item align-self-center">
+                     <br> 
+                    <a href="/logout" style="text-decoration:none">
+                    <p class="designation">Logout</p>
+                    </a>
                     </li>
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right hidden-lg-up align-self-center" type="button" data-toggle="offcanvas">
@@ -62,20 +65,20 @@
                 </div>
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html">
+                            <a class="nav-link" href="#">
                                 <!-- <i class="fa fa-dashboard"></i> -->
                                 <img src="{% static '/images/icons/1.png' %}" alt="">
-                                <span class="menu-title">Class Room</span>
+                                <span class="menu-title">Classroom</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../pages/widgets.html">
+                            <a class="nav-link" href="#">
                                 <img src="{% static '/images/icons/2.png' %}" alt="">
                                 <span class="menu-title">Events</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="../pages/forms.html">
+                            <a class="nav-link" href="#">
                                 <!-- <i class="fa fa-wpforms"></i> -->
                                 <img src="{% static '/images/icons/3.png' %}" alt="">
                                 <span class="menu-title">Grades</span>
@@ -83,20 +86,20 @@
                         </li>
                         {% if current_user.is_staff == True%}
                         <li class="nav-item">
-                            <a class="nav-link" href="../pages/buttons.html">
+                            <a class="nav-link" href="#">
                                 <!-- <i class="fa fa-calculator"></i> -->
                                 <img src="{% static '/images/icons/4.png' %}" alt="">
                                 <span class="menu-title">Students </span>
                             </a>
                         </li>
-                        {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link" href="../pages/tables.html">
+                            <a class="nav-link" href="#">
                                 <!-- <i class="fa fa-table"></i> -->
                                 <img src="{% static '/images/icons/5.png' %}" alt="">
-                                <span class="menu-title">Tables</span>
+                                <span class="menu-title">Classrooms </span>
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </nav>
                 <!-- SIDEBAR ENDS -->

@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-from .utils.li import nivel_list
+from .utils.li import nivel_list, type_list
 
 
 class Attendance(models.Model):
@@ -52,6 +52,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=False)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    type_of_course = models.CharField(max_length=30, choices=type_list,
+                                      blank=True)
 
     attendance = models.ManyToManyField(Attendance, blank=True)
     grades = models.ManyToManyField(StudentTests, blank=True)

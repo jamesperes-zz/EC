@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from datetime import date
 
 from django.contrib.auth import logout
 
@@ -15,8 +16,18 @@ def ec_home(request):
 @login_required
 def home_dashboard(request):
     current_user = request.user
+    user = User.objects.get(id=current_user.id)
+    date_start = user.date_joined.date()
+    days_con = date.today() - date_start
+    days_cont_int = int(days_con.days)
+    if user.type_of_course == "1-month":
+        count_day = 30 - days_cont_int
+
+    else:
+        count_day = 30 * 6 - days_cont_int
+
     return render(request, 'ecweb/dashboard.html',
-                  {'current_user': current_user})
+                  {'current_user': current_user, 'days_cont_int': days_cont_int})
 
 
 @login_required
