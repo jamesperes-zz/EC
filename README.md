@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jamesperes/EC.svg?branch=master)](https://travis-ci.org/jamesperes/EC)
+
 # EC
 Project for manage students in English College.
 
