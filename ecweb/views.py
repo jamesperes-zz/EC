@@ -38,14 +38,15 @@ def user_detail(request):
 
 
 def register(request):
+    current_user = request.user
     if request.method == "POST":
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/ecweb/dashboard.html')
     else:
         form = UserForm()
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'registration/register.html', {'form': form, 'current_user': current_user})
 
 
 def logout_view(request):

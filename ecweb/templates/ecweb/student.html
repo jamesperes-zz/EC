@@ -72,6 +72,10 @@
 {% endblock %}
 
 {% block content %}
+                <div class="content-wrapper">
+
+                    <h3 class="text-primary mb-4">Student Dashboard</h3>
+
 <center>
                 <div class="user-info">
                     <img src="{{ current_user.avatar.url}}" class="rounded-circle" alt="" width="304" height="236">
@@ -128,5 +132,5 @@
                     <span class="online"></span>
                 </div>
 </center>
-
+</div>
 {% endblock %}

@@ -9,7 +9,8 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email',
-                  'date_joined', 'is_staff', 'avatar')
+                  'date_joined', 'is_staff', 'avatar',
+                  'password')
 
 
 class PhotoForm(forms.ModelForm):
