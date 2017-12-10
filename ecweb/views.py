@@ -9,10 +9,6 @@ from .forms import UserForm, PhotoForm
 from .models import Calendar, Menssage, User
 
 
-def ec_home(request):
-    return render(request, 'ecweb/home.html')
-
-
 @login_required
 def home_dashboard(request):
     current_user = request.user
