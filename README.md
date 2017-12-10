@@ -6,7 +6,7 @@ Project for manage students in English College.
 ### Requeriments
 
    - Python 3
-   - Django 1.11
+   - Django 2
 
 ### Install VirtualEnv
 
