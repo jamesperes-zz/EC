@@ -6,3 +6,5 @@ python:
 install:
   - pip install -r req_dev.txt
 # command to run tests
+script:
+  - python manage.py test
