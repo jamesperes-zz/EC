@@ -8,17 +8,17 @@ Project for manage students in English College.
 
 ### Install VirtualEnv
 
-'''sh
+```sh
 $ virtualenv --python=python3 venv
 $ source venv/bin/Activate
-'''
+```
 
 For install Requeiments
 
-'''sh
+```sh
 $ pip install -r req_dev.txt
 $ python manage.py migrate
 $ python manage.py runserver
-'''
+```
   
 
