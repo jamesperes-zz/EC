@@ -13,11 +13,6 @@ def ec_home(request):
 
 
 @login_required
-def ec_board(request):
-    return render(request, 'ecweb/board.html')
-
-
-@login_required
 def home_dashboard(request):
     current_user = request.user
     return render(request, 'ecweb/dashboard.html',
