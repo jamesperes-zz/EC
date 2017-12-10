@@ -17,17 +17,9 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
-from ecweb.views import (ec_home, register, logout_view,
-                         calendar_view, home_dashboard, user_detail)
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', ec_home),
-    url(r'^dashboard/', home_dashboard, name='home_dashboard'),
-    url(r'^student/', user_detail, name='user_detail'),
-    url(r'^register/$', register),
-    url(r'^calendar/$', calendar_view, name='calendar_view'),
-    url(r'^logout/$', logout_view),
+    url(r'^', include('ecweb.urls', namespace='ecweb')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
-
+    url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
