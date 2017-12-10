@@ -13,7 +13,7 @@ $ virtualenv --python=python3 venv
 $ source venv/bin/Activate
 ```
 
-For install Requeiments
+###For install Requeriments
 
 ```sh
 $ pip install -r req_dev.txt
