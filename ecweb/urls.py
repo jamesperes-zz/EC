@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^student/', views.user_detail, name='user_detail'),
     url(r'^register/$', views.register),
     url(r'^calendar/$', views.calendar_view, name='calendar_view'),
+    url(r'^classroom/$', views.classroom_view, name='classroom_view'),
     url(r'^logout/$', views.logout_view),
 ]

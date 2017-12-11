@@ -18,9 +18,11 @@ def home_dashboard(request):
     days_cont_int = int(days_con.days)
     if user.type_of_course == "1-month":
         count_day = 30 - days_cont_int
+        percent = int(-100.0 * (count_day / 30))
 
     else:
         count_day = 30 * 6 - days_cont_int
+        percent = int(100.0 * (count_day / (30 * 6)))
 
     return render(request, 'ecweb/dashboard.html',
                   {'current_user': current_user, 'days_cont_int': days_cont_int})
@@ -50,7 +52,7 @@ def register(request):
         form = UserForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        return HttpResponseRedirect('/ecweb/dashboard.html')
+        return HttpResponseRedirect('/')
     else:
         form = UserForm()
     return render(request, 'registration/register.html', {'form': form, 'current_user': current_user})
@@ -64,5 +66,10 @@ def logout_view(request):
 @login_required
 def calendar_view(request):
     events = Calendar.objects.all()
-
     return render(request, 'ecweb/calendar.html', {'events': events})
+
+
+@login_required
+def classroom_view(request):
+    current_user = request.user
+    return render(request, 'ecweb/classroom.html', {'current_user': current_user, })

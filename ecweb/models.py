@@ -78,12 +78,22 @@ class User(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
 
+class Youtube(models.Model):
+    description = models.CharField(max_length=50, blank=True)
+    link = models.CharField(max_length=255, blank=True)
+
+
+class Pdf_file(models.Model):
+    description = models.CharField(max_length=50, blank=True)
+    file = models.FileField(upload_to="media/", blank=True)
+
+
 class ClassRoom(models.Model):
     number_class = models.IntegerField(blank=True)
     nivel = models.CharField(max_length=30, choices=nivel_list, blank=True)
-    students = models.ForeignKey(User, on_delete=models.CASCADE)
-    youtube = models.URLField(blank=True)
-    pdf = models.FileField(upload_to="media/", blank=True)
+    students = models.ManyToManyField(User)
+    youtube = models.ManyToManyField(Youtube, blank=True)
+    pdf = models.ManyToManyField(Pdf_file, blank=True)
 
     def __str__(self):
         return '{}: {}'.format(self.number_class, self.nivel)
