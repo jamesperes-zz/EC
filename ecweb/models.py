@@ -88,8 +88,7 @@ class Pdf_file(models.Model):
     description = models.CharField(max_length=50, blank=True)
     file = models.FileField(upload_to="media/", blank=True)
 
-class Teacher(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 
 class ClassRoom(models.Model):
@@ -98,11 +97,13 @@ class ClassRoom(models.Model):
     students = models.ForeignKey(User, on_delete=models.CASCADE)
     youtube = models.ManyToManyField(Youtube, blank=True)
     pdf = models.ManyToManyField(Pdf_file, blank=True)
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{}: {}'.format(self.number_class, self.nivel)
 
+class Teacher(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
 
 class Menssage(models.Model):
     menssage_text = models.TextField(blank=True)
