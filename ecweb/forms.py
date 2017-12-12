@@ -4,15 +4,6 @@ from PIL import Image
 from django.core.files import File
 
 
-class UserForm(forms.ModelForm):
-
-    class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email',
-                  'date_joined', 'is_staff', 'avatar',
-                  'password')
-
-
 class PhotoForm(forms.ModelForm):
     x = forms.FloatField(widget=forms.HiddenInput())
     y = forms.FloatField(widget=forms.HiddenInput())
