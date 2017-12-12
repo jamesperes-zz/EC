@@ -47,6 +47,7 @@ class StudentTests(models.Model):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
+    cod = models.IntegerField(blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     date_joined = models.DateTimeField(_('date joined'), null=True)
     is_active = models.BooleanField(_('active'), default=True)
@@ -88,16 +89,21 @@ class Pdf_file(models.Model):
     file = models.FileField(upload_to="media/", blank=True)
 
 
+
+
 class ClassRoom(models.Model):
     number_class = models.IntegerField(blank=True)
     nivel = models.CharField(max_length=30, choices=nivel_list, blank=True)
-    students = models.ManyToManyField(User)
+    students = models.ForeignKey(User, on_delete=models.CASCADE)
     youtube = models.ManyToManyField(Youtube, blank=True)
     pdf = models.ManyToManyField(Pdf_file, blank=True)
 
     def __str__(self):
         return '{}: {}'.format(self.number_class, self.nivel)
 
+class Teacher(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
 
 class Menssage(models.Model):
     menssage_text = models.TextField(blank=True)
