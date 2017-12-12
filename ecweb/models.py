@@ -78,32 +78,52 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
-
-class Youtube(models.Model):
-    description = models.CharField(max_length=50, blank=True)
-    link = models.CharField(max_length=255, blank=True)
-
-
-class Pdf_file(models.Model):
-    description = models.CharField(max_length=50, blank=True)
-    file = models.FileField(upload_to="media/", blank=True)
-
-
+    def __str__(self):
+        full_name = '%s %s' % (self.first_name, self.last_name)
+        return full_name.strip()
 
 
 class ClassRoom(models.Model):
     number_class = models.IntegerField(blank=True)
     nivel = models.CharField(max_length=30, choices=nivel_list, blank=True)
-    students = models.ForeignKey(User, on_delete=models.CASCADE)
-    youtube = models.ManyToManyField(Youtube, blank=True)
-    pdf = models.ManyToManyField(Pdf_file, blank=True)
 
     def __str__(self):
         return '{}: {}'.format(self.number_class, self.nivel)
 
+
+class Youtube(models.Model):
+    description = models.CharField(max_length=50, blank=True)
+    link = models.CharField(max_length=255, blank=True)
+    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description
+
+
+class Pdf_file(models.Model):
+    description = models.CharField(max_length=50, blank=True)
+    file = models.FileField(upload_to="media/", blank=True)
+    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description
+
+
 class Teacher(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.first_name
+
+
+class Student(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.first_name
+
 
 class Menssage(models.Model):
     menssage_text = models.TextField(blank=True)
