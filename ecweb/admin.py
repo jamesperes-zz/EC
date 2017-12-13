@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import User, Calendar, Menssage, ClassRoom, Teacher
 from .forms import CreateUserFormAdmin, UpdateUserFormAdmin
+from .models import (User, Calendar, Menssage, ClassRoom, Teacher, Student,
+                     Youtube, Pdf_file)
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -38,12 +39,27 @@ class TeacherInline(admin.TabularInline):
     extra = 1
 
 
+class StudentInline(admin.TabularInline):
+    model = Student
+    extra = 1
+
+
+class YoutubeInline(admin.TabularInline):
+    model = Youtube
+    extra = 1
+
+
+class Pdf_fileInline(admin.TabularInline):
+    model = Pdf_file
+    extra = 1
+
+
 class TeacherAdmin(admin.ModelAdmin):
     pass
 
 
 class ClassRoomAdmin(admin.ModelAdmin):
-    inlines = [TeacherInline]
+    inlines = [TeacherInline, StudentInline, Pdf_fileInline, YoutubeInline]
 
 
 admin.site.register(User, UserAdmin)
