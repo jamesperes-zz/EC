@@ -1,16 +1,41 @@
 from django import forms
+from django.contrib.auth import forms as auth_forms
 from .models import User
 from PIL import Image
 from django.core.files import File
 
 
-class UserForm(forms.ModelForm):
+class CreateUserFormAdmin(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email',
-                  'date_joined', 'is_staff', 'avatar',
-                  'password')
+        fields = [
+            'avatar', 'first_name',
+            'last_name', 'email', 'password',
+            'cod', 'type_of_course', 'is_active',
+            'is_staff', 'attendance', 'grades'
+        ]
+        widgets = {
+            'password': forms.PasswordInput()
+        }
+
+    def save(self, commit=True):
+        user = super(CreateUserFormAdmin, self).save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
+
+class UpdateUserFormAdmin(CreateUserFormAdmin):
+    password = auth_forms.ReadOnlyPasswordHashField(
+        label=("Password"),
+        help_text=(
+            "Raw passwords are not stored, instead "
+            "a hash is created from them, and is "
+            "saved in the database. "
+        )
+    )
 
 
 class PhotoForm(forms.ModelForm):
@@ -40,6 +65,5 @@ class PhotoForm(forms.ModelForm):
         cropped_image = image.crop((x, y, w + x, h + y))
         resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
         resized_image.save(photo.avatar.path)
-
 
         return photo
