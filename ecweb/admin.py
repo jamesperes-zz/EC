@@ -1,14 +1,9 @@
 from django.contrib import admin
 from .models import User, Calendar, Menssage, ClassRoom, Teacher
+from .forms import CreateUserFormAdmin, UpdateUserFormAdmin
 
 
 class UserAdmin(admin.ModelAdmin):
-    fields = (
-        'avatar', 'first_name',
-        'last_name', 'email', 'password',
-        'cod', 'type_of_course', 'is_active',
-        'is_staff', 'attendance', 'grades'
-    )
     list_display = (
         'cod', 'first_name', 'last_name',
         'email', 'type_of_course'
@@ -19,6 +14,15 @@ class UserAdmin(admin.ModelAdmin):
         'date_joined', 'type_of_course'
     )
     list_filter = ('type_of_course', 'date_joined',)
+    add_form = CreateUserFormAdmin
+    form = UpdateUserFormAdmin
+
+    def get_form(self, request, obj=None, **kwargs):
+        defaults = {}
+        if obj is None:
+            defaults['form'] = self.add_form
+        defaults.update(kwargs)
+        return super().get_form(request, obj, **defaults)
 
 
 class CalendarAdmin(admin.ModelAdmin):
