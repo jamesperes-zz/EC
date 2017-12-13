@@ -3,7 +3,22 @@ from .models import User, Calendar, Menssage, ClassRoom, Teacher
 
 
 class UserAdmin(admin.ModelAdmin):
-    pass
+    fields = (
+        'avatar', 'first_name',
+        'last_name', 'email', 'password',
+        'cod', 'type_of_course', 'is_active',
+        'is_staff', 'attendance', 'grades'
+    )
+    list_display = (
+        'cod', 'first_name', 'last_name',
+        'email', 'type_of_course'
+    )
+    date_hierarchy = 'date_joined'
+    search_fields = (
+        'first_name', 'last_name', 'email', 'cod',
+        'date_joined', 'type_of_course'
+    )
+    list_filter = ('type_of_course', 'date_joined',)
 
 
 class CalendarAdmin(admin.ModelAdmin):
