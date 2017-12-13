@@ -47,7 +47,7 @@ class StudentTests(models.Model):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    cod = models.IntegerField(blank=True)
+    cod = models.IntegerField(blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     date_joined = models.DateTimeField(_('date joined'), null=True)
     is_active = models.BooleanField(_('active'), default=True)
