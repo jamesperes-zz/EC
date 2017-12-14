@@ -3,6 +3,14 @@
 # EC
 Project for manage students in English College.
 
+The project is based on the rules of language schools in Ireland and used to show student information during the course. e.g
+
+   - Grades
+   - Attendance
+   - Nexts events in school
+   - Receive documents and Links from teachers
+
+
 ### Requeriments
 
    - Python 3
