@@ -28,7 +28,11 @@ $ source venv/bin/Activate
 ```sh
 $ pip install -r req_dev.txt
 $ python manage.py migrate
-$ python manage.py runserver
+$ python manage.py test
 ```
   
 
+### For run Server
+```sh
+$ python manage.py runserver
+```
