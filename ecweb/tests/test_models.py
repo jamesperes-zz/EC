@@ -1,6 +1,11 @@
 from django.test import TestCase
-from ecweb.models import ClassRoom, User, Student, Teacher
-import datetime
+from ecweb.models import (
+    ClassRoom,
+    User,
+    Student,
+    Teacher,
+    MyUserManager
+)
 
 
 class ClassRoomModelTest(TestCase):
@@ -54,6 +59,9 @@ class UserModelTest(TestCase):
 
     def test_create(self):
         self.assertTrue(User.objects.exists())
+
+    def test_is_istance_manager(self):
+        self.assertIsInstance(User.objects, MyUserManager)
 
     def test_is_instance_of_user(self):
         self.assertIsInstance(self.user, User)
