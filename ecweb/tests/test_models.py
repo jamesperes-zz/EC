@@ -54,3 +54,6 @@ class UserModelTest(TestCase):
 
     def test_create(self):
         self.assertTrue(User.objects.exists())
+
+    def test_is_instance_of_user(self):
+        self.assertIsInstance(self.user, User)
