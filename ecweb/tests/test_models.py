@@ -1,6 +1,11 @@
 from django.test import TestCase
-from ecweb.models import ClassRoom, User, Student, Teacher
-import datetime
+from ecweb.models import (
+    ClassRoom,
+    User,
+    Student,
+    Teacher,
+    MyUserManager
+)
 
 
 class ClassRoomModelTest(TestCase):
@@ -43,15 +48,38 @@ class ClassRoomModelTest(TestCase):
 
 class UserModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create(
+        self.user = User.objects.create_user(
             email="test@ec.com",
+            password="abcd1234ec",
             first_name="TestName",
             last_name="TestLastName",
             cod=1,
-            date_joined=datetime.datetime.now(),
-            is_staff=False,
             type_of_course="6-month"
         )
 
     def test_create(self):
         self.assertTrue(User.objects.exists())
+
+    def test_is_istance_manager(self):
+        self.assertIsInstance(User.objects, MyUserManager)
+
+    def test_is_instance_of_user(self):
+        self.assertIsInstance(self.user, User)
+
+    def test_str_method(self):
+        object_name = '{} {}'.format(
+            self.user.first_name,
+            self.user.last_name
+        )
+        self.assertEqual(object_name, str(self.user))
+
+    def test_if_login_pass(self):
+        login = self.client.login(
+            username=self.user.email,
+            password="abcd1234ec"
+        )
+        self.assertTrue(login)
+
+    def test_default_image_profile(self):
+        avatar_image_url = self.user.avatar
+        self.assertEqual('avatars/user_default.png', avatar_image_url)
