@@ -43,13 +43,12 @@ class ClassRoomModelTest(TestCase):
 
 class UserModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create(
+        self.user = User.objects.create_user(
             email="test@ec.com",
+            password="abcd1234ec",
             first_name="TestName",
             last_name="TestLastName",
             cod=1,
-            date_joined=datetime.datetime.now(),
-            is_staff=False,
             type_of_course="6-month"
         )
 
