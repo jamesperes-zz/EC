@@ -57,3 +57,10 @@ class UserModelTest(TestCase):
 
     def test_is_instance_of_user(self):
         self.assertIsInstance(self.user, User)
+
+    def test_str_method(self):
+        object_name = '{} {}'.format(
+            self.user.first_name,
+            self.user.last_name
+        )
+        self.assertEqual(object_name, str(self.user))
