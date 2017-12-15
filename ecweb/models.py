@@ -63,7 +63,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), null=True)
     is_active = models.BooleanField(_('active'), default=True)
     is_staff = models.BooleanField(_('staff'), default=False)
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatar = models.ImageField(
+        upload_to='avatars/',
+        default='avatars/user_default.png',
+        blank=True
+    )
     type_of_course = models.CharField(max_length=30, choices=type_list,
                                       blank=True)
 
