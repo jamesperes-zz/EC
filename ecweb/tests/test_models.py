@@ -64,3 +64,10 @@ class UserModelTest(TestCase):
             self.user.last_name
         )
         self.assertEqual(object_name, str(self.user))
+
+    def test_if_login_pass(self):
+        login = self.client.login(
+            username=self.user.email,
+            password="abcd1234ec"
+        )
+        self.assertTrue(login)
