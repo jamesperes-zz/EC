@@ -79,3 +79,7 @@ class UserModelTest(TestCase):
             password="abcd1234ec"
         )
         self.assertTrue(login)
+
+    def test_default_image_profile(self):
+        avatar_image_url = self.user.avatar
+        self.assertEqual('avatars/user_default.png', avatar_image_url)
