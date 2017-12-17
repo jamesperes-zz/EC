@@ -6,7 +6,7 @@ from datetime import date
 from django.contrib.auth import logout
 
 from .forms import PhotoForm
-from .models import Calendar, Menssage, User
+from .models import Calendar, Menssage, User, ClassRoom, Teacher, Student
 
 
 @login_required
@@ -45,6 +45,7 @@ def user_detail(request):
     return render(request, 'ecweb/student.html',
                   {'current_user': current_user, 'form': form})
 
+
 def logout_view(request):
     logout(request)
     return render(request, 'registration/logout.html')
@@ -59,4 +60,17 @@ def calendar_view(request):
 @login_required
 def classroom_view(request):
     current_user = request.user
-    return render(request, 'ecweb/classroom.html', {'current_user': current_user, })
+    if current_user.is_staff:
+        teacher_instance = Teacher.objects.filter(user=current_user.id)
+        teachar_obj = teacher_instance[0]
+        classroom = ClassRoom.objects.get(id=teachar_obj.classroom_id)
+
+    else:
+        student_instance = Student.objects.filter(user=current_user.id)
+        student_obj = teacher_instance[0]
+        classroom = ClassRoom.objects.get(id=student_obj.classroom_id)
+        
+    pdf = classroom.pdf_file_set.all()
+    return render(request, 'ecweb/classroom.html', {'current_user': current_user,
+                                                    'classroom': classroom,
+                                                    'pdf': pdf})
