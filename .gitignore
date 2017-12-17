@@ -102,3 +102,6 @@ ENV/
 
 *.sqlite3
 /media/avatars/profiles
+
+# pycharm
+.idea
