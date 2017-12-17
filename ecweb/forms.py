@@ -12,6 +12,7 @@ class CreateUserFormAdmin(forms.ModelForm):
         fields = [
             'avatar', 'first_name',
             'last_name', 'email', 'password',
+            'date_joined',
             'cod', 'type_of_course', 'is_active',
             'is_staff', 'attendance', 'grades'
         ]
