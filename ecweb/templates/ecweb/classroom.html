@@ -13,7 +13,14 @@
 
 
 
-{% block content %}
 
+{% block content %}
+<div class="content-wrapper">
+
+                    <h3 class="text-primary mb-4">{{classroom.nivel}} - {{classroom.number_class}}</h3>
+                    {% for pdf_obj in pdf%}
+                    <a href="{{pdf_obj.file.url}}">{{pdf_obj.description}}</a>
+                    {% endfor %}
+</div>
 
 {% endblock %}
