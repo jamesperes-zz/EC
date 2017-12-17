@@ -13,8 +13,8 @@ class CreateUserFormAdmin(forms.ModelForm):
             'avatar', 'first_name',
             'last_name', 'email', 'password',
             'date_joined',
-            'cod', 'type_of_course', 'is_active',
-            'is_staff', 'attendance', 'grades'
+            'cod', 'type_of_course',
+            'is_active', 'is_staff'
         ]
         widgets = {
             'password': forms.PasswordInput()

@@ -12,7 +12,7 @@ class ClassRoomModelTest(TestCase):
     def setUp(self):
         self.classroom = ClassRoom.objects.create(
             number_class='01',
-            nivel="upper"
+            level="upper"
         )
         self.user = User.objects.create(
             email="test@ec.com",
@@ -28,8 +28,8 @@ class ClassRoomModelTest(TestCase):
         number = 1
         self.assertEqual(number, int(self.classroom.number_class))
 
-    def test_str_nivel(self):
-        self.assertEqual('upper', str(self.classroom.nivel))
+    def test_str_level(self):
+        self.assertEqual('upper', str(self.classroom.level))
 
     def test_student_forengkey(self):
         self.student = Student.objects.create(
@@ -60,7 +60,7 @@ class UserModelTest(TestCase):
     def test_create(self):
         self.assertTrue(User.objects.exists())
 
-    def test_is_istance_manager(self):
+    def test_is_instance_manager(self):
         self.assertIsInstance(User.objects, MyUserManager)
 
     def test_is_instance_of_user(self):

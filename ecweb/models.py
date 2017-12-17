@@ -4,14 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
-from .utils.li import nivel_list, type_list
-
-
-class Attendance(models.Model):
-    attendance = models.DateField(blank=True)
-
-    def __str__(self):
-        return self.attendance
+from .utils.li import level_choices, type_list, test_choices
 
 
 class MyUserManager(BaseUserManager):
@@ -70,10 +63,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     type_of_course = models.CharField(max_length=30, choices=type_list,
                                       blank=True)
-
-    attendance = models.ManyToManyField(Attendance, blank=True)
-    grades = models.ManyToManyField(StudentTests, blank=True)
-
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
@@ -98,46 +87,77 @@ class User(AbstractBaseUser, PermissionsMixin):
         return full_name.strip()
 
 
-class ClassRoom(models.Model):
-    number_class = models.IntegerField(blank=True)
-    nivel = models.CharField(max_length=30, choices=nivel_list, blank=True)
+
+class Student(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '{}: {}'.format(self.number_class, self.nivel)
+        return self.user.first_name
+
+
+class Teacher(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.first_name
+
+
+class ClassRoom(models.Model):
+    number_class = models.IntegerField(blank=True)
+    level = models.CharField(max_length=30, choices=level_choices, blank=True)
+    students = models.ManyToManyField(Student)
+    teachers = models.ManyToManyField(Teacher)
+
+    def __str__(self):
+        return '{}: {}'.format(self.number_class, self.level)
+
 
 
 class Youtube(models.Model):
     description = models.CharField(max_length=50, blank=True)
     link = models.CharField(max_length=255, blank=True)
-    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
 
 
-class Pdf_file(models.Model):
+class PdfFile(models.Model):
     description = models.CharField(max_length=50, blank=True)
     file = models.FileField(upload_to="media/", blank=True)
-    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.description
 
 
-class Teacher(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Class(models.Model):
     classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+    date = models.DateField()
+    lesson = models.TextField()
+    videos = models.ManyToManyField(Youtube)
+    files = models.ManyToManyField(PdfFile)
 
     def __str__(self):
-        return self.user.first_name
+        return "{}: {}".format(self.date, self.lesson[:30])
 
 
-class Student(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class ClassAttendance(models.Model):
+    class_event = models.ForeignKey(Class, on_delete=models.CASCADE)
+    students = models.ManyToManyField(Student)
+
+
+class Test(models.Model):
     classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+    date = models.DateField()
+    type = models.CharField(max_length=50, choices=test_choices)
 
     def __str__(self):
-        return self.user.first_name
+        return "{}: {}".format(self.date, self.lesson[:30])
+
+
+class TestGrade(models.Model):
+    test_event = models.ForeignKey(Test, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    grade = models.FloatField()
 
 
 class Menssage(models.Model):
