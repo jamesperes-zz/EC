@@ -5,8 +5,8 @@ from datetime import date
 
 from django.contrib.auth import logout
 
-from .forms import PhotoForm
-from .models import Calendar, Menssage, User, ClassRoom, Teacher, Student
+from .forms import PhotoForm, AttendanceForm
+from .models import Calendar, Menssage, User, ClassRoom, Teacher, Student, Class
 
 
 @login_required
@@ -61,16 +61,54 @@ def calendar_view(request):
 def classroom_view(request):
     current_user = request.user
     if current_user.is_staff:
-        teacher_instance = Teacher.objects.filter(user=current_user.id)
-        teachar_obj = teacher_instance[0]
-        classroom = ClassRoom.objects.get(id=teachar_obj.classroom_id)
+        teacher = Teacher.objects.get(user=current_user.id)
+        classroom = ClassRoom.objects.get(id=teacher.classroom_id)
 
     else:
-        student_instance = Student.objects.filter(user=current_user.id)
-        student_obj = teacher_instance[0]
-        classroom = ClassRoom.objects.get(id=student_obj.classroom_id)
-        
+        student = Student.objects.get(user=current_user.id)
+        classroom = ClassRoom.objects.get(id=student.classroom_id)
+
     pdf = classroom.pdf_file_set.all()
     return render(request, 'ecweb/classroom.html', {'current_user': current_user,
                                                     'classroom': classroom,
                                                     'pdf': pdf})
+
+
+@login_required
+def classes_view(request):
+    all_classes = Class.objects.all()
+    current_user = request.user
+
+    return render(request, 'ecweb/classes.html', {'all_classes': all_classes, 'current_user': current_user})
+
+
+@login_required
+def class_view(request, class_id):
+    current_user = request.user
+    class_obj = Class.objects.get(id=class_id)
+
+    choices_student = []
+    for student in class_obj.classroom.students.all():
+        student_id = student.id
+        student_name = '{}, {}'.format(student.user.last_name, student.user.first_name)
+        choices_student.append((student_id, student_name))
+
+    if request.method == 'POST':
+        form = AttendanceForm(request.POST)
+        form.fields['students'].choices = tuple(choices_student)
+
+        if form.is_valid():
+            students_to_update = [int(s) for s in form.cleaned_data['students']]
+            class_obj.attendances.clear()
+            class_obj.attendances.add(*students_to_update)
+
+        return HttpResponseRedirect('/class')
+
+    else:
+        attendanced_students = [s.id for s in class_obj.attendances.all()]
+
+        form = AttendanceForm(initial={'class_id': class_id, 'students': attendanced_students})
+        form.fields['students'].choices = tuple(choices_student)
+
+    return render(request, 'ecweb/class_attendance.html',
+                  {'form': form, 'current_user': current_user, 'class_id': class_id, 'class_obj': class_obj})

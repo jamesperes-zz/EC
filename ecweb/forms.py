@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms
-from .models import User
+from .models import User, Student
 from PIL import Image
 from django.core.files import File
 
@@ -68,3 +68,8 @@ class PhotoForm(forms.ModelForm):
         resized_image.save(photo.avatar.path)
 
         return photo
+
+
+class AttendanceForm(forms.Form):
+    class_id = forms.CharField(label='Class id', max_length=100, widget=forms.HiddenInput())
+    students = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(), required=False)

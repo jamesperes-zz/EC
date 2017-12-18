@@ -133,16 +133,12 @@ class Class(models.Model):
     classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
     date = models.DateField()
     lesson = models.TextField()
-    videos = models.ManyToManyField(Youtube)
-    files = models.ManyToManyField(PdfFile)
+    videos = models.ManyToManyField(Youtube, blank=True)
+    files = models.ManyToManyField(PdfFile, blank=True)
+    attendances = models.ManyToManyField(Student, blank=True)
 
     def __str__(self):
         return "{}: {}".format(self.date, self.lesson[:30])
-
-
-class ClassAttendance(models.Model):
-    class_event = models.ForeignKey(Class, on_delete=models.CASCADE)
-    students = models.ManyToManyField(Student)
 
 
 class Test(models.Model):
