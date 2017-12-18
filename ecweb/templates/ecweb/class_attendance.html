@@ -1,0 +1,30 @@
+{% extends 'ecweb/baseadmin.html' %}
+{% load staticfiles %}
+
+{% block head %}
+
+
+{% endblock %}
+
+{% block js %}
+
+
+{% endblock %}
+
+
+
+
+{% block content %}
+<div class="content-wrapper">
+
+    Date: {{ class_obj.date }}
+    <br/>
+    Lessons: {{ class_obj.lesson }}
+
+    <form action="/class/{{class_id}}/attendances/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Save attendances" />
+    </form>
+</div>
+{% endblock %}

@@ -1,7 +1,10 @@
 from django.contrib import admin
+from django.db.models import ManyToManyField
+from django.forms import CheckboxSelectMultiple
+
 from .forms import CreateUserFormAdmin, UpdateUserFormAdmin
 from .models import (User, Calendar, Menssage, ClassRoom, Teacher, Student,
-                     Youtube, Pdf_file)
+                     Youtube, PdfFile, Class)
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -34,24 +37,12 @@ class MenssageAdmin(admin.ModelAdmin):
     pass
 
 
-class TeacherInline(admin.TabularInline):
-    model = Teacher
-    extra = 1
+class YoutubeAdmin(admin.ModelAdmin):
+    pass
 
 
-class StudentInline(admin.TabularInline):
-    model = Student
-    extra = 1
-
-
-class YoutubeInline(admin.TabularInline):
-    model = Youtube
-    extra = 1
-
-
-class Pdf_fileInline(admin.TabularInline):
-    model = Pdf_file
-    extra = 1
+class PdfFileAdmin(admin.ModelAdmin):
+    pass
 
 
 class TeacherAdmin(admin.ModelAdmin):
@@ -59,7 +50,18 @@ class TeacherAdmin(admin.ModelAdmin):
 
 
 class ClassRoomAdmin(admin.ModelAdmin):
-    inlines = [TeacherInline, StudentInline, Pdf_fileInline, YoutubeInline]
+    pass
+
+
+class ClassAdmin(admin.ModelAdmin):
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ClassAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['attendances'].widget = CheckboxSelectMultiple()
+        return form
+
+
+class StudentAdmin(admin.ModelAdmin):
+    pass
 
 
 admin.site.register(User, UserAdmin)
@@ -67,3 +69,7 @@ admin.site.register(Calendar, CalendarAdmin)
 admin.site.register(Menssage, MenssageAdmin)
 admin.site.register(ClassRoom, ClassRoomAdmin)
 admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Youtube, YoutubeAdmin)
+admin.site.register(PdfFile, PdfFileAdmin)
+admin.site.register(Class, ClassAdmin)
+admin.site.register(Student, StudentAdmin)
