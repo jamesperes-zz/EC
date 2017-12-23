@@ -36,3 +36,13 @@ $ python manage.py test
 ```sh
 $ python manage.py runserver
 ```
+
+## Authors
+
+* **James Peres** - *Initial work* - [jamesperes](https://github.com/jamesperes)
+
+See also the list of [contributors](https://github.com/jamesperes/EC/graphs/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
