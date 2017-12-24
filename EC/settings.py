@@ -125,4 +125,4 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/board'
 
-AUTH_USER_MODEL = 'ecweb.User'
+AUTH_USER_MODEL = 'ecweb.BasicUser'

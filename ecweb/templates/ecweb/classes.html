@@ -1,27 +1,16 @@
 {% extends 'ecweb/baseadmin.html' %}
 {% load staticfiles %}
 
-{% block head %}
+{% block head %}{% endblock %}
 
-
-{% endblock %}
-
-{% block js %}
-
-
-{% endblock %}
-
-
-
+{% block js %}{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
-
-    <h1>Classes</h1>
-                    <h3 class="text-primary mb-4">{{classroom.nivel}} - {{classroom.number_class}}</h3>
-                    {% for class_obj in all_classes%}
-                    <a href="/class/{{class_obj.id}}/attendances/">{{class_obj.date}}</a>
-                    {% endfor %}
+  <h1>Classes</h1>
+  <h3 class="text-primary mb-4">{{classroom.nivel}} - {{classroom.number_class}}</h3>
+  {% for class_obj in all_classes%}
+    <a href="/class/{{class_obj.id}}/attendances/">{{class_obj.date}}</a>
+  {% endfor %}
 </div>
-
 {% endblock %}

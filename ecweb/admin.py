@@ -3,21 +3,21 @@ from django.db.models import ManyToManyField
 from django.forms import CheckboxSelectMultiple
 
 from .forms import CreateUserFormAdmin, UpdateUserFormAdmin
-from .models import (User, Calendar, Menssage, ClassRoom, Teacher, Student,
-                     Youtube, PdfFile, Class)
+from .models import (ClassRoom, Teacher, Student, Coordinator,
+                     Youtube, PdfFile, Class, BasicUser)
 
 
-class UserAdmin(admin.ModelAdmin):
+class BasicUserAdmin(admin.ModelAdmin):
     list_display = (
-        'cod', 'first_name', 'last_name',
-        'email', 'type_of_course'
+        'first_name', 'last_name',
+        'email',
     )
     date_hierarchy = 'date_joined'
     search_fields = (
-        'first_name', 'last_name', 'email', 'cod',
-        'date_joined', 'type_of_course'
+        'first_name', 'last_name', 'email',
+        'date_joined',
     )
-    list_filter = ('type_of_course', 'date_joined',)
+    list_filter = ('date_joined',)
     add_form = CreateUserFormAdmin
     form = UpdateUserFormAdmin
 
@@ -45,10 +45,6 @@ class PdfFileAdmin(admin.ModelAdmin):
     pass
 
 
-class TeacherAdmin(admin.ModelAdmin):
-    pass
-
-
 class ClassRoomAdmin(admin.ModelAdmin):
     pass
 
@@ -64,12 +60,19 @@ class StudentAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(User, UserAdmin)
-admin.site.register(Calendar, CalendarAdmin)
-admin.site.register(Menssage, MenssageAdmin)
+class TeacherAdmin(admin.ModelAdmin):
+    pass
+
+
+class CoordinatorAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(BasicUser, BasicUserAdmin)
 admin.site.register(ClassRoom, ClassRoomAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Youtube, YoutubeAdmin)
 admin.site.register(PdfFile, PdfFileAdmin)
 admin.site.register(Class, ClassAdmin)
 admin.site.register(Student, StudentAdmin)
+admin.site.register(Coordinator, CoordinatorAdmin)

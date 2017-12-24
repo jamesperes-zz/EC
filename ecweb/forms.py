@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms
-from .models import User, Student
+from .models import BasicUser, Student
 from PIL import Image
 from django.core.files import File
 
@@ -8,12 +8,11 @@ from django.core.files import File
 class CreateUserFormAdmin(forms.ModelForm):
 
     class Meta:
-        model = User
+        model = BasicUser
         fields = [
             'avatar', 'first_name',
             'last_name', 'email', 'password',
             'date_joined',
-            'cod', 'type_of_course',
             'is_active', 'is_staff'
         ]
         widgets = {
@@ -46,7 +45,7 @@ class PhotoForm(forms.ModelForm):
     height = forms.FloatField(widget=forms.HiddenInput())
 
     class Meta:
-        model = User
+        model = BasicUser
         fields = ('avatar', 'x', 'y', 'width', 'height', )
         widgets = {
             'avatar': forms.FileInput(attrs={
