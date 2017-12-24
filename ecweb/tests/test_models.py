@@ -1,10 +1,9 @@
 from django.test import TestCase
 from ecweb.models import (
     ClassRoom,
-    User,
+    BasicUser,
     Student,
-    Teacher,
-    MyUserManager
+    Teacher
 )
 
 
@@ -14,11 +13,10 @@ class ClassRoomModelTest(TestCase):
             number_class='01',
             level="upper"
         )
-        self.user = User.objects.create(
+        self.BasicUser = BasicUser.objects.create(
             email="test@ec.com",
             first_name="TestName",
-            last_name="TestLastName",
-            cod=1,
+            last_name="TestLastName"
         )
 
     def test_create(self):
@@ -33,53 +31,50 @@ class ClassRoomModelTest(TestCase):
 
     def test_student_forengkey(self):
         self.student = Student.objects.create(
-            user=self.user,
-            classroom=self.classroom
+            user=self.BasicUser,
+            classroom=self.classroom,
+            cod=1
         )
         self.assertTrue(Student.objects.exists())
 
     def test_teacher_forengkey(self):
         self.teacher = Teacher.objects.create(
-            user=self.user,
-            classroom=self.classroom
+            user=self.BasicUser
         )
         self.assertTrue(Teacher.objects.exists())
 
 
-class UserModelTest(TestCase):
+class BasicUserModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
+        self.basic_user = BasicUser.objects.create(
             email="test@ec.com",
             password="abcd1234ec",
             first_name="TestName",
-            last_name="TestLastName",
-            cod=1,
-            type_of_course="6-month"
+            last_name="TestLastName"
         )
+        self.student = Student(user=self.basic_user)
 
     def test_create(self):
-        self.assertTrue(User.objects.exists())
+        self.assertTrue(BasicUser.objects.exists())
 
-    def test_is_instance_manager(self):
-        self.assertIsInstance(User.objects, MyUserManager)
 
-    def test_is_instance_of_user(self):
-        self.assertIsInstance(self.user, User)
+    def test_is_instance_of_BasicUser(self):
+        self.assertIsInstance(self.basic_user, BasicUser)
 
     def test_str_method(self):
         object_name = '{} {}'.format(
-            self.user.first_name,
-            self.user.last_name
+            self.basic_user.first_name,
+            self.basic_user.last_name
         )
-        self.assertEqual(object_name, str(self.user))
+        self.assertEqual(object_name, str(self.basic_user))
 
     def test_if_login_pass(self):
         login = self.client.login(
-            username=self.user.email,
+            email=self.basic_user.email,
             password="abcd1234ec"
         )
         self.assertTrue(login)
 
     def test_default_image_profile(self):
-        avatar_image_url = self.user.avatar
+        avatar_image_url = self.basic_user.avatar
         self.assertEqual('avatars/user_default.png', avatar_image_url)
