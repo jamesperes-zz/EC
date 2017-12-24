@@ -1,136 +1,121 @@
 {% load staticfiles %}
 <DOCTYPE html>
 <html lang="en">
-
   <head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>EC Admin</title>
-      <link rel="stylesheet" href="{% static '/css/libs/font-awesome.min.css' %}" />
-      <link rel="stylesheet" href="{% static '/css/libs/perfect-scrollbar.min.css' %}" />
-      <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
-      <link rel="shortcut icon" href="{% static '/images/favicon.png' %}"/>
-{% block head %}{% endblock %}
-
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>EC Admin</title>
+    <link rel="stylesheet" href="{% static '/css/libs/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/libs/perfect-scrollbar.min.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
+    <link rel="shortcut icon" href="{% static '/images/favicon.png' %}"/>
+    {% block head %}{% endblock %}
   </head>
   <body>
-      <div class=" container-scroller">
-        <!--Navbar-->
-        <nav class="navbar bg-primary-gradient col-lg-12 col-12 p-0 fixed-top navbar-inverse d-flex flex-row">
-            <div class="bg-white text-center navbar-brand-wrapper">
-                <a class="navbar-brand brand-logo" href="/dashboard"><img src="{% static 'images/logo_star_black.png' %}" /></a>
-                <a class="navbar-brand brand-logo-mini" href="/dashboard"><img src="{% static 'images/logo_star_mini.jpg' %}" alt=""></a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center">
-                <button class="navbar-toggler navbar-toggler hidden-md-down align-self-center mr-3" type="button" data-toggle="minimize">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <ul class="navbar-nav ml-lg-auto d-flex align-items-center flex-row">
-                    <li class="nav-item">
-                        <a class="nav-link profile-pic" href="#"><img class="rounded-circle" src="{{ current_user.avatar.url}}" alt=""></a>
-                    </li>
-                    <li class="nav-item align-self-center">
-                     <br> 
-                    <a href="/logout" style="text-decoration:none">
-                    <p class="designation">Logout</p>
-                    </a>
-                    </li>
-                </ul>
-                <button class="navbar-toggler navbar-toggler-right hidden-lg-up align-self-center" type="button" data-toggle="offcanvas">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </nav>
-        <!--End navbar-->
-        <div class="container-fluid">
-            <div class="row row-offcanvas row-offcanvas-right">
-                <nav class="bg-white sidebar sidebar-fixed sidebar-offcanvas" id="sidebar">
-                <div class="user-info">
-                    <img src="{{ current_user.avatar.url}}" alt="">
-                    <a href="/student">
-                    <p class="name" >{{current_user.first_name}}</p>
-                    </a>
-                    {% if current_user.is_staff == True%}
-                    <p class="designation">Staff</p>
-                    {% else %}
-                    <p class="designation">Student</p>
-                    {% endif %}
-
-                    <span class="online"></span>
-                    <a href="/logout">
-                    <p class="designation">Logout</p>
-                    </a>
-                </div>
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/class">
-                                <!-- <i class="fa fa-dashboard"></i> -->
-                                <img src="{% static '/images/icons/1.png' %}" alt="">
-                                <span class="menu-title">Classes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <img src="{% static '/images/icons/2.png' %}" alt="">
-                                <span class="menu-title">Events</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <!-- <i class="fa fa-wpforms"></i> -->
-                                <img src="{% static '/images/icons/3.png' %}" alt="">
-                                <span class="menu-title">Grades</span>
-                            </a>
-                        </li>
-                        {% if current_user.is_staff == True%}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <!-- <i class="fa fa-calculator"></i> -->
-                                <img src="{% static '/images/icons/4.png' %}" alt="">
-                                <span class="menu-title">Students </span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <!-- <i class="fa fa-table"></i> -->
-                                <img src="{% static '/images/icons/5.png' %}" alt="">
-                                <span class="menu-title">Classrooms </span>
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-                <!-- SIDEBAR ENDS -->
-
-                
-
-                
-                {% block content %}{% endblock %}
-
-
-                <footer class="footer">
-                    <div class="container-fluid clearfix">
-                      <span class="float-right">
-                          <a href="#">EC Admin</a> &copy; 2017
-                      </span>
-                    </div>
-                </footer>
-            </div>
+    <div class=" container-scroller">
+      <!--Navbar-->
+      <nav class="navbar bg-primary-gradient col-lg-12 col-12 p-0 fixed-top navbar-inverse d-flex flex-row">
+        <div class="bg-white text-center navbar-brand-wrapper">
+          <a class="navbar-brand brand-logo" href="/dashboard"><img src="{% static 'images/logo_star_black.png' %}" /></a>
+          <a class="navbar-brand brand-logo-mini" href="/dashboard"><img src="{% static 'images/logo_star_mini.jpg' %}" alt=""></a>
         </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center">
+          <button class="navbar-toggler navbar-toggler hidden-md-down align-self-center mr-3" type="button" data-toggle="minimize">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
+          <ul class="navbar-nav ml-lg-auto d-flex align-items-center flex-row">
+            <li class="nav-item">
+              <a class="nav-link profile-pic" href="#"><img class="rounded-circle" src="{{ current_user.avatar.url}}" alt=""></a>
+            </li>
+            <li class="nav-item align-self-center">
+              <br><a href="/logout" style="text-decoration:none"><p class="designation">Logout</p></a>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right hidden-lg-up align-self-center" type="button" data-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav>
+      <!--End navbar-->
+      <div class="container-fluid">
+        <div class="row row-offcanvas row-offcanvas-right">
+          <nav class="bg-white sidebar sidebar-fixed sidebar-offcanvas" id="sidebar">
+            <div class="user-info">
+              <img src="{{ current_user.avatar.url}}" alt="">
+              <a href="/student">
+              <p class="name" >{{current_user.first_name}}</p>
+              </a>
+              {% block user_title %}{% endblock %}
+
+              <span class="online"></span>
+              <a href="/logout">
+              <p class="designation">Logout</p>
+              </a>
+            </div>
+            <ul class="nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="/class">
+                    <!-- <i class="fa fa-dashboard"></i> -->
+                    <img src="{% static '/images/icons/1.png' %}" alt="">
+                    <span class="menu-title">Classes</span>
+                  </a>
+              </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <img src="{% static '/images/icons/2.png' %}" alt="">
+                    <span class="menu-title">Events</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <!-- <i class="fa fa-wpforms"></i> -->
+                      <img src="{% static '/images/icons/3.png' %}" alt="">
+                      <span class="menu-title">Grades</span>
+                    </a>
+                </li>
+                {% if current_user.is_staff == True%}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <!-- <i class="fa fa-calculator"></i> -->
+                      <img src="{% static '/images/icons/4.png' %}" alt="">
+                      <span class="menu-title">Students </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                      <!-- <i class="fa fa-table"></i> -->
+                      <img src="{% static '/images/icons/5.png' %}" alt="">
+                      <span class="menu-title">Classrooms </span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+          </nav>
+          <!-- SIDEBAR ENDS -->
+
+          {% block content %}{% endblock %}
+
+          <footer class="footer">
+            <div class="container-fluid clearfix">
+              <span class="float-right">
+                <a href="#">EC Admin</a> &copy; 2017
+              </span>
+            </div>
+          </footer>
+        </div>
       </div>
+    </div>
 
-      <script src="{% static  '/js/libs/jquery.min.js' %}"></script>
-      <script src="{% static  '/js/libs/tether.min.js' %}"></script>
-      <script src="{% static  '/js/libs/bootstrap.min.js' %}"></script>
-      <script src="{% static  '/js/libs/Chart.min.js' %}"></script>
-      <script src="{% static  '/js/libs/perfect-scrollbar.jquery.min.js' %}"></script>
-      <script src="{% static  '/js/off-canvas.js' %}"></script>
-      <script src="{% static  '/js/hoverable-collapse.js' %}"></script>
-      <script src="{% static  '/js/misc.js' %}"></script>
-      {% block js %}{% endblock %}
+    <script src="{% static  '/js/libs/jquery.min.js' %}"></script>
+    <script src="{% static  '/js/libs/tether.min.js' %}"></script>
+    <script src="{% static  '/js/libs/bootstrap.min.js' %}"></script>
+    <script src="{% static  '/js/libs/Chart.min.js' %}"></script>
+    <script src="{% static  '/js/libs/perfect-scrollbar.jquery.min.js' %}"></script>
+    <script src="{% static  '/js/off-canvas.js' %}"></script>
+    <script src="{% static  '/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static  '/js/misc.js' %}"></script>
+    {% block js %}{% endblock %}
   </body>
-
 </html>
