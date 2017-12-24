@@ -30,6 +30,7 @@ The project is based on the rules of language schools in Ireland and used to sho
 - Class Rooms:
   - Number
   - Level
+  - Morning / afternoon
   - Many Students
   - Many Teachers
 - Classes
