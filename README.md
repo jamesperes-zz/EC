@@ -75,6 +75,11 @@ $ python manage.py test
 $ python manage.py runserver
 ```
 
+### Access admin
+
+login: admin@admin.com
+password: admin123
+
 ## Authors
 
 * **James Peres** - *Initial work* - [jamesperes](https://github.com/jamesperes)
