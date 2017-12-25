@@ -52,11 +52,20 @@ class BasicUserModelTest(TestCase):
             first_name="TestName",
             last_name="TestLastName"
         )
-        self.student = Student(user=self.basic_user)
+        self.student = Student.objects.create(user=self.basic_user,
+                                              cod=1,
+                                              type_of_course='1-month'
+                                              )
 
     def test_create(self):
         self.assertTrue(BasicUser.objects.exists())
 
+    def test_student_exists(self):
+        self.assertTrue(Student.objects.exists())
+
+    def test_create_student(self):
+        print(self.student)
+        self.assertEqual(self.basic_user.first_name, self.student.first_name)
 
     def test_is_instance_of_BasicUser(self):
         self.assertIsInstance(self.basic_user, BasicUser)
@@ -70,7 +79,7 @@ class BasicUserModelTest(TestCase):
 
     def test_if_login_pass(self):
         login = self.client.login(
-            email=self.basic_user.email,
+            email=self.student.email,
             password="abcd1234ec"
         )
         self.assertTrue(login)
