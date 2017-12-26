@@ -126,3 +126,9 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/board'
 
 AUTH_USER_MODEL = 'ecweb.BasicUser'
+
+if os.environ.get("DOCKER_DEVELOPMENT"):
+    try:
+        from EC.docker_settings import *
+    except ImportError:
+        pass
