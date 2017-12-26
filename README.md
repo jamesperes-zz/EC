@@ -79,7 +79,7 @@ $ python manage.py runserver
 ```sh
 sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 ```
-*P.s Other S.O other than debian look at [here](https://docs.docker.com/compose/install/)*
+*P.s: S.O other than debian look at [here](https://docs.docker.com/compose/install/)*
 
 ```sh
 cd provision/compose
@@ -95,7 +95,7 @@ curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gp
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
 sudo apt-get update && sudo apt-get install docker-ce
 ```
-*P.s: Other S.O other than debian look at [here](https://docs.docker.com/engine/installation/)*
+*P.s: S.O other than debian look at [here](https://docs.docker.com/engine/installation/)*
 ```sh
 cd provision/docker
 sudo docker build -t ec_app -f Dockerfile
