@@ -8,4 +8,3 @@ DATABASES = {
         'PASSWORD': '98uonqwnepj021'
     }
 }
-print("PASSED")
