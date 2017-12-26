@@ -76,19 +76,26 @@ def calendar_view(request):
 
 @login_required
 def classroom_view(request):
+    context = {}
     current_user = request.user
     if current_user.is_staff:
-        teacher = Teacher.objects.get(user=current_user.id)
-        classroom = ClassRoom.objects.get(id=teacher.classroom_id)
+        teacher = Teacher.objects.filter(user=current_user.id)
+
+        if teacher.exists():
+            teacher = teacher.first()
+            classroom = ClassRoom.objects.get(id=teacher.classroom_id)
+            context['pdf'] = classroom.pdf_file_set.all()
+        else:
+            classroom = None
 
     else:
         student = Student.objects.get(user=current_user.id)
         classroom = ClassRoom.objects.get(id=student.classroom_id)
 
-    pdf = classroom.pdf_file_set.all()
-    return render(request, 'ecweb/classroom.html', {'current_user': current_user,
-                                                    'classroom': classroom,
-                                                    'pdf': pdf})
+    context['classroom'] = classroom
+    context['current_user'] = current_user
+
+    return render(request, 'ecweb/classroom.html', context)
 
 
 @login_required
