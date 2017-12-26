@@ -1,0 +1,15 @@
+FROM postgres:9.6
+MAINTAINER Rondineli Gomes <rondineli.gomes.araujo@gmail.com>
+
+ENV POSTGRES_DB ec_development
+ENV POSTGRES_USER ec_-development
+ENV POSTGRES_PASSWORD 98uonqwne2pj021
+
+
+ENV POSTGRES_PASSWORD 98uonqwne2pj021
+
+ENV POSTGRES_USER ec_development
+
+EXPOSE 5432
+
+USER postgres
