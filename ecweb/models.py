@@ -43,6 +43,11 @@ class Teacher(models.Model):
 
 class Coordinator(models.Model):
     user = models.OneToOneField(BasicUser, on_delete=models.CASCADE)
+
+    class Meta:
+        permissions = (
+            ("view_all_classrooms", "Can view all classrooms"),
+        )
     def __str__(self):
         return self.user.first_name
 
