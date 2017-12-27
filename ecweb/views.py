@@ -3,6 +3,11 @@ from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from datetime import date
 
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
+
 from django.contrib.auth import logout
 
 from .forms import PhotoForm, AttendanceForm
@@ -45,22 +50,61 @@ def home_dashboard(request):
 
     raise Http404
 
+
 @login_required
 def user_detail(request):
     current_user = request.user
     insta = get_object_or_404(BasicUser, pk=int(current_user.id))
-    if request.method == 'POST':
-        form = PhotoForm(request.POST, request.FILES, instance=insta)
-        if form.is_valid():
-            profil = form.save()
-            profil.user = current_user
-            profil.save()
 
-            return redirect('user_detail')
+    if request.method == 'POST':
+        if "change_password" in request.POST:
+            print('teste' * 100)
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)  # Important!
+                messages.success(
+                    request, 'Your password was successfully updated!')
+                return redirect('user_detail')
+            else:
+                form = PasswordChangeForm(request.user)
+                return render(request, 'ecweb/student.html', {
+                    'form': form
+                })
+
+        else:
+
+            form = PhotoForm(request.POST, request.FILES, instance=insta)
+            if form.is_valid():
+                profil = form.save()
+                profil.user = current_user
+                profil.save()
+
+                return redirect('user_detail')
     else:
         form = PhotoForm()
-    return render(request, 'ecweb/student.html',
-                  {'current_user': current_user, 'form': form})
+        return render(request, 'ecweb/student.html',
+            {'current_user': current_user, 'form': form})
+
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(
+                request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/change-password.html', {
+        'form': form
+    })
 
 
 def logout_view(request):
@@ -107,7 +151,8 @@ def class_view(request, class_id):
     choices_student = []
     for student in class_obj.classroom.students.all():
         student_id = student.id
-        student_name = '{}, {}'.format(student.user.last_name, student.user.first_name)
+        student_name = '{}, {}'.format(
+            student.user.last_name, student.user.first_name)
         choices_student.append((student_id, student_name))
 
     if request.method == 'POST':
@@ -115,7 +160,8 @@ def class_view(request, class_id):
         form.fields['students'].choices = tuple(choices_student)
 
         if form.is_valid():
-            students_to_update = [int(s) for s in form.cleaned_data['students']]
+            students_to_update = [int(s)
+                                  for s in form.cleaned_data['students']]
             class_obj.attendances.clear()
             class_obj.attendances.add(*students_to_update)
 
@@ -124,7 +170,8 @@ def class_view(request, class_id):
     else:
         attendanced_students = [s.id for s in class_obj.attendances.all()]
 
-        form = AttendanceForm(initial={'class_id': class_id, 'students': attendanced_students})
+        form = AttendanceForm(
+            initial={'class_id': class_id, 'students': attendanced_students})
         form.fields['students'].choices = tuple(choices_student)
 
     return render(request, 'ecweb/class_attendance.html',

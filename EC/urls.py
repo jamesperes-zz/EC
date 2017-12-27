@@ -18,9 +18,17 @@ from django.urls import include, path
 from django.conf import settings
 from django.contrib import admin
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+from ecweb import views
 
 urlpatterns = [
     path('', include('ecweb.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^admin/', admin.site.urls),
+    path(
+        'change-password/',
+        auth_views.PasswordChangeView.as_view(
+            template_name='registration/change-password.html'),
+    ),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
