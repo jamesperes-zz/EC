@@ -58,7 +58,7 @@ def user_detail(request):
 
     if request.method == 'POST':
         if "change_password" in request.POST:
-            print('teste' * 100)
+            
             form = PasswordChangeForm(request.user, request.POST)
             if form.is_valid():
                 user = form.save()
