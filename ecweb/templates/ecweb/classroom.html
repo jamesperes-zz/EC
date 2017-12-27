@@ -9,7 +9,7 @@
 <div class="content-wrapper">
   
   {% if perms.ecweb.view_all_classrooms %}
-      <a href="#">
+      <a href="{% url 'classroom_create_view' %}">
         Create a classroom
       </a>
   {% endif %}

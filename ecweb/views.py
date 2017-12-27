@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from datetime import date
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from django.contrib.auth import logout
+from django.views.generic import CreateView
 from django.views.generic.list import ListView
 
 from .forms import PhotoForm, AttendanceForm
@@ -110,6 +113,18 @@ class ClassRoomListView(ListView):
             queryset = ClassRoom.objects.filter(students=student.id)
 
         return queryset
+
+class ClassRoomCreateView(PermissionRequiredMixin, CreateView):
+    model = ClassRoom
+    template_name = 'ecweb/classroom/create_classroom.html'
+    success_url = reverse_lazy('classroom_view')
+    permission_required = 'view_all_classrooms'
+    fields = (
+        'number_class',
+        'level',
+        'students',
+        'teachers'
+    )
 
 
 @login_required
