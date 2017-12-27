@@ -31,7 +31,7 @@ urlpatterns = [
         template_name='registration/forget-done.html'),),
     path('forget-password/', auth_views.PasswordResetView.as_view(
         template_name='registration/forget-password.html',
-        success_url='done'),),
+        success_url='done'),name='forget_password'),
     url(r'^password/reset/\
         (?P<uidb64>[0-9A-Za-z_\-]+)/\
         (?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
