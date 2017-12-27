@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import date
 
 from django.contrib.auth import logout
+from django.views.generic.list import ListView
 
 from .forms import PhotoForm, AttendanceForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
@@ -74,28 +75,41 @@ def calendar_view(request):
     return render(request, 'ecweb/calendar.html', {'events': events})
 
 
-@login_required
-def classroom_view(request):
-    context = {}
-    current_user = request.user
-    if current_user.is_staff:
-        teacher = Teacher.objects.filter(user=current_user.id)
+class ClassRoomListView(ListView):
 
-        if teacher.exists():
-            teacher = teacher.first()
-            classroom = ClassRoom.objects.get(id=teacher.classroom_id)
-            context['pdf'] = classroom.pdf_file_set.all()
+    model = ClassRoom
+    template_name = 'ecweb/classroom.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ClassRoomListView, self).get_context_data(
+            *args, **kwargs
+        )
+
+        queryset = self.get_queryset()
+
+        return context
+
+    def get_queryset(self):
+        current_user = self.request.user
+
+        queryset = super(ClassRoomListView, self).get_queryset()
+
+        if current_user.is_staff:
+            teacher = Teacher.objects.filter(user=current_user.id)
+
+            if teacher.exists():
+                queryset = ClassRoom.objects.filter(
+                    teachers=teacher.first().id
+                )
+
+            else:
+                queryset = ClassRoom.objects.all()
+
         else:
-            classroom = None
+            student = Student.objects.get(user=current_user.id)
+            queryset = ClassRoom.objects.filter(students=student.id)
 
-    else:
-        student = Student.objects.get(user=current_user.id)
-        classroom = ClassRoom.objects.get(id=student.classroom_id)
-
-    context['classroom'] = classroom
-    context['current_user'] = current_user
-
-    return render(request, 'ecweb/classroom.html', context)
+        return queryset
 
 
 @login_required
