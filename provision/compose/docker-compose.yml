@@ -4,6 +4,7 @@ services:
         build:
             context: ../../.
             dockerfile: provision/docker/Dockerfile
+        restart: always    
         ports:
            - 8080:8080
         command: bash -c "/usr/bin/wait-for-it.sh db sleep 5; python3 /src/manage.py migrate && python3 /src/manage.py runserver 0.0.0.0:8080"
