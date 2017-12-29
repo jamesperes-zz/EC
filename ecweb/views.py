@@ -107,10 +107,9 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
 
         return queryset
 
-class ClassRoomDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class ClassRoomDetailView(LoginRequiredMixin, DetailView):
     model = ClassRoom
     template_name = 'ecweb/classroom/detail_classroom.html'
-    permission_required = 'view_all_classrooms'
 
 class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = ClassRoom
