@@ -16,3 +16,8 @@ test_choices = (
     ('listening', 'Listening'),
     ('reading', 'Reading'),
 )
+
+school_shifts = (
+    ('morning', 'Morning'),
+    ('afternoon', 'Afternoon')
+)
