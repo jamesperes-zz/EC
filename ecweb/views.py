@@ -5,6 +5,7 @@ from datetime import date
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 
 from django.contrib.auth import logout
 from django.views.generic import CreateView
@@ -110,6 +111,19 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
 class ClassRoomDetailView(LoginRequiredMixin, DetailView):
     model = ClassRoom
     template_name = 'ecweb/classroom/detail_classroom.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        classroom = self.get_object()
+        user = request.user
+
+        is_coordinator = Coordinator.objects.filter(user=user).exists()
+        student_in_classroom = classroom.students.all().filter(user=user).exists()
+        teacher_in_classroom = classroom.teachers.all().filter(user=user).exists()
+
+        if not (student_in_classroom or teacher_in_classroom or is_coordinator):
+            return redirect('classroom_view')
+
+        return super(ClassRoomDetailView, self).dispatch(request, *args, **kwargs)
 
 class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = ClassRoom
