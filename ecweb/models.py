@@ -45,7 +45,7 @@ class Teacher(models.Model):
 
     class Meta:
         permissions = (
-            ("view_classroom_detail", "Can view the classroom detail")
+            ("view_classroom_detail", "Can view the classroom detail"),
         )
 
     def __str__(self):
