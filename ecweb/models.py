@@ -42,9 +42,14 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     user = models.OneToOneField(BasicUser, on_delete=models.CASCADE)
+
+    class Meta:
+        permissions = (
+            ("view_classroom_detail", "Can view the classroom detail")
+        )
+
     def __str__(self):
         return self.user.first_name
-
 
 
 class Coordinator(models.Model):
@@ -53,7 +58,9 @@ class Coordinator(models.Model):
     class Meta:
         permissions = (
             ("view_all_classrooms", "Can view all classrooms"),
+            ("view_classroom_detail", "Can view the classroom detail")
         )
+
     def __str__(self):
         return self.user.first_name
 
