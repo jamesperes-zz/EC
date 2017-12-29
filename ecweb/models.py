@@ -7,6 +7,7 @@ from .utils.li import (
     test_choices,
     classroom_turns_choices
 )
+from django.utils.text import slugify
 
 
 from django.contrib.auth.models import AbstractUser
@@ -64,6 +65,11 @@ class ClassRoom(models.Model):
     students = models.ManyToManyField(Student)
     teachers = models.ManyToManyField(Teacher)
     turn = models.CharField(max_length=50, choices=classroom_turns_choices)
+    slug = models.SlugField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.__str__())
+        super(ClassRoom, self).save(*args, **kwargs)
 
     def __str__(self):
         return '{}: {}'.format(self.number_class, self.level)
