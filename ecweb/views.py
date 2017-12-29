@@ -81,7 +81,7 @@ def calendar_view(request):
 class ClassRoomListView(ListView):
 
     model = ClassRoom
-    template_name = 'ecweb/classroom.html'
+    template_name = 'ecweb/classroom/classroom.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(ClassRoomListView, self).get_context_data(
