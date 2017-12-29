@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 from .forms import PhotoForm, AttendanceForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
@@ -105,6 +106,11 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
             queryset = ClassRoom.objects.filter(students=student.id)
 
         return queryset
+
+class ClassRoomDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    model = ClassRoom
+    template_name = 'ecweb/classroom/detail_classroom.html'
+    permission_required = 'view_all_classrooms'
 
 class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = ClassRoom
