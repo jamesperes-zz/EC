@@ -84,15 +84,6 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
     model = ClassRoom
     template_name = 'ecweb/classroom/classroom.html'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(ClassRoomListView, self).get_context_data(
-            *args, **kwargs
-        )
-
-        queryset = self.get_queryset()
-
-        return context
-
     def get_queryset(self):
         current_user = self.request.user
 
