@@ -58,7 +58,7 @@ def user_detail(request):
 
     if request.method == 'POST':
         if "change_password" in request.POST:
-            
+
             form = PasswordChangeForm(request.user, request.POST)
             if form.is_valid():
                 user = form.save()
@@ -84,8 +84,7 @@ def user_detail(request):
     else:
         form = PhotoForm()
         return render(request, 'ecweb/student.html',
-            {'current_user': current_user, 'form': form})
-
+                      {'current_user': current_user, 'form': form})
 
 
 @login_required
@@ -121,18 +120,24 @@ def calendar_view(request):
 @login_required
 def classroom_view(request):
     current_user = request.user
-    if current_user.is_staff:
+    user = Coordinator.objects.filter(user__id=current_user.id)
+    if user:
+        classroom = ClassRoom.objects.all()
+
+    user = Teacher.objects.filter(user__id=current_user.id)
+    if user:
         teacher = Teacher.objects.get(user=current_user.id)
-        classroom = ClassRoom.objects.get(id=teacher.classroom_id)
+        classroom = ClassRoom.objects.filter(teachers=teacher.id)
 
-    else:
+    user = Student.objects.filter(user__id=current_user.id)
+    if user:
         student = Student.objects.get(user=current_user.id)
-        classroom = ClassRoom.objects.get(id=student.classroom_id)
+        classroom = ClassRoom.objects.filter(students=student.id)
 
-    pdf = classroom.pdf_file_set.all()
+
     return render(request, 'ecweb/classroom.html', {'current_user': current_user,
-                                                    'classroom': classroom,
-                                                    'pdf': pdf})
+                                                    'classrooms': classroom,
+                                                    })
 
 
 @login_required
@@ -140,7 +145,8 @@ def classes_view(request):
     all_classes = Class.objects.all()
     current_user = request.user
 
-    return render(request, 'ecweb/classes.html', {'all_classes': all_classes, 'current_user': current_user})
+    return render(request, 'ecweb/classes.html', {'all_classes': all_classes,
+                                                  'current_user': current_user})
 
 
 @login_required
