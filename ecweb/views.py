@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import date
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.contrib.auth import logout
 from django.views.generic import CreateView
@@ -78,7 +79,7 @@ def calendar_view(request):
     return render(request, 'ecweb/calendar.html', {'events': events})
 
 
-class ClassRoomListView(ListView):
+class ClassRoomListView(LoginRequiredMixin, ListView):
 
     model = ClassRoom
     template_name = 'ecweb/classroom/classroom.html'
@@ -114,7 +115,7 @@ class ClassRoomListView(ListView):
 
         return queryset
 
-class ClassRoomCreateView(PermissionRequiredMixin, CreateView):
+class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = ClassRoom
     template_name = 'ecweb/classroom/create_classroom.html'
     success_url = reverse_lazy('classroom_view')
