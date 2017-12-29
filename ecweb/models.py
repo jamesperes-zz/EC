@@ -1,7 +1,12 @@
 from django.db import models
 from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
-from .utils.li import level_choices, type_list, test_choices
+from .utils.li import (
+    level_choices, 
+    type_list, 
+    test_choices,
+    classroom_turns_choices
+)
 
 
 from django.contrib.auth.models import AbstractUser
@@ -58,6 +63,7 @@ class ClassRoom(models.Model):
     level = models.CharField(max_length=30, choices=level_choices, blank=True)
     students = models.ManyToManyField(Student)
     teachers = models.ManyToManyField(Teacher)
+    turn = models.CharField(max_length=50, choices=classroom_turns_choices)
 
     def __str__(self):
         return '{}: {}'.format(self.number_class, self.level)
