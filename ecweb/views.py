@@ -141,8 +141,8 @@ def classroom_view(request):
 
 
 @login_required
-def classes_view(request):
-    all_classes = Class.objects.all()
+def classes_view(request, class_room_id):
+    all_classes = Class.objects.filter(classroom=class_room_id)
     current_user = request.user
 
     return render(request, 'ecweb/classes.html', {'all_classes': all_classes,

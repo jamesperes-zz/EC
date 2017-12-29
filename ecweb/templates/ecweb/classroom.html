@@ -10,6 +10,7 @@
 	
 	{% for classroom in classrooms%}
   <h3 class="text-primary mb-4">{{classroom.level}} - {{classroom.number_class}}</h3>
+  <a href="/class/{{classroom.id}}/">link</a>
   {% endfor%}
 </div>
 {% endblock %}
