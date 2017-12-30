@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
+from django.contrib import messages
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -137,6 +138,25 @@ class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         'teachers',
         'turn'
     )
+
+    def form_valid(self, form):
+
+        self.object = form.save(commit=False)
+
+        classroom_exists = ClassRoom.objects.filter(
+            number_class=self.object.number_class,
+            level=self.object.level,
+            turn=self.object.turn
+        ).exists()
+
+        if classroom_exists:
+            messages.error(
+                self.request,
+                'This classroom already exists.'
+            )
+            return super(ClassRoomCreateView, self).form_invalid(form)
+
+        return super(ClassRoomCreateView, self).form_valid(form)
 
 class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = ClassRoom
