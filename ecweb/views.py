@@ -95,15 +95,16 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
 
             if teacher.exists():
                 queryset = ClassRoom.objects.filter(
-                    teachers=teacher.first().id
+                    teachers=teacher.first().id,
+                    is_active=True
                 )
 
             else:
-                queryset = ClassRoom.objects.all()
+                queryset = ClassRoom.objects.filter(is_active=True)
 
         else:
             student = Student.objects.get(user=current_user.id)
-            queryset = ClassRoom.objects.filter(students=student.id)
+            queryset = ClassRoom.objects.filter(students=student.id, is_active=True)
 
         return queryset
 
