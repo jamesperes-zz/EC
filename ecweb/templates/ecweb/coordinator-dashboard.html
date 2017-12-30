@@ -11,6 +11,19 @@
 		a.btn.btn-coodinator:hover {
 			background-color: #2b82ba;
 		}
+		a.btn.btn-teacher {
+			background-color: #2c4a5d;
+			color: white;
+			font-weight: bold;
+		}
+		a.btn.btn-teacher:hover {
+			background-color: #1d608a;
+		}
+
+		.row.buttons {
+			margin-bottom: 10px;
+			margin-left: 1em;
+		}
 	</style>
 {% endblock %}
 
@@ -20,7 +33,18 @@
 {% block content %}
 <div class="content-wrapper">
     <h3 class="text-primary mb-4">Coordinator's Dashboard</h3>
-    <a class="btn btn-coodinator" href="{% url 'create-user' %}">Create a Coordinator</<a>
+    <div class="row buttons">
+	    <a class="btn btn-coodinator" 
+	    	href="{% url 'create-user' redirect_url='create-coodinator' %}">
+	    		Create a Coordinator
+	    </a>
+	</div>
+	<div class="row buttons">
+	    <a class="btn btn-teacher" 
+	    	href="{% url 'create-user' redirect_url='create-teacher' %}">
+	    		Create a Teacher
+	    </a>
+	</div>
 </div>
 <footer class="footer">
     <div class="container-fluid clearfix">
