@@ -161,7 +161,6 @@ class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
 class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = ClassRoom
     template_name = 'ecweb/classroom/update_classroom.html'
-    success_url = reverse_lazy('classroom_view')
     permission_required = 'ecweb.view_all_classrooms'
     fields = (
         'number_class',
@@ -170,6 +169,38 @@ class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
         'teachers',
         'turn'
     )
+
+    def form_valid(self, form):
+
+        self.object = form.save(commit=False)
+        form_changed = form.has_changed()
+
+        if form_changed:
+            classroom_exists = ClassRoom.objects.filter(
+                number_class=self.object.number_class,
+                level=self.object.level,
+                turn=self.object.turn
+            ).exists()
+
+            if classroom_exists:
+                messages.error(
+                    self.request,
+                    'This classroom already exists.'
+                )
+                return super(ClassRoomUpdateView, self).form_invalid(form)
+            else:
+                messages.success(
+                    self.request,
+                    'Classroom successfully updated'
+                )
+
+                return super(ClassRoomUpdateView, self).form_valid(form)
+
+        messages.info(
+            self.request,
+            'The classroom does changed.'
+        )
+        return super(ClassRoomUpdateView, self).form_valid(form)
 
 class ClassRoomDeactivateView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = ClassRoom
