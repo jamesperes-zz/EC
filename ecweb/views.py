@@ -25,7 +25,6 @@ def create_user_type_view(request, user_type):
         if form.is_valid():
             user = form.save()
             if user_type == 'coordinator':
-                print('passou!')
                 Coordinator.objects.create(user=user)
             elif user_type == 'teacher':
                 Teacher.objects.create(user=user)
