@@ -16,11 +16,14 @@
     <h4 class="text-primary mb-3">My Classrooms</h4>
   {% endif %}
   {% for classroom in object_list %}
-    <h3 class="text-primary mb-3">
-      <a href="{% url 'classroom_detail_view' slug=classroom.slug %}">
-        {{classroom.level}} - {{classroom.number_class}}
-      </a>
-    </h3>
+    <div class="row">
+      <h3 class="text-primary col-sm-1-4">
+        <a href="{% url 'classroom_detail_view' slug=classroom.slug %}">
+          {{classroom.level}} - {{classroom.number_class}}
+        </a>
+      </h3>
+      <a href="{% url 'classroom_update_view' slug=classroom.slug %}" class="col-sm-1-3">Update</a>
+    </div>
   {% endfor %}
 </div>
 {% endblock %}
