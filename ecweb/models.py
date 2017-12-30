@@ -8,8 +8,7 @@ from .utils.li import (
     classroom_turns_choices
 )
 from django.utils.text import slugify
-from guardian.models import UserObjectPermission
-from guardian.shortcuts import assign_perm
+from django.contrib.auth.models import Permission
 
 
 from django.contrib.auth.models import AbstractUser
@@ -58,12 +57,9 @@ class Coordinator(models.Model):
         )
 
     def save(self, *args, **kwargs):
+        permission = Permission.objects.get(codename='view_all_classrooms')
 
-        assign_perm(
-            'view_all_classrooms',
-            self.user,
-            obj=self
-        )
+        self.user.user_permissions.add(permission)
 
         super(Coordinator, self).save(*args, **kwargs)
 
