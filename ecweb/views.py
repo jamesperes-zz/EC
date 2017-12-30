@@ -5,9 +5,6 @@ from datetime import date
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
-from django.contrib.auth.models import Permission
-
 from django.contrib.auth import logout
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
