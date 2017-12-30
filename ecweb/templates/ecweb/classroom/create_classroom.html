@@ -7,6 +7,9 @@
 
 {% block content %}
 <div class="content-wrapper">
+  {% for message in messages %}
+      {{ message }}
+  {% endfor %}
   <form method="POST">
     {% csrf_token %}
     <h3>Create a classroom</h3>
