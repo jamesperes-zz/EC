@@ -12,6 +12,7 @@ from django.contrib.auth import logout
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import UpdateView
 
 from .forms import PhotoForm, AttendanceForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
@@ -139,6 +140,18 @@ class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         'turn'
     )
 
+class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = ClassRoom
+    template_name = 'ecweb/classroom/update_classroom.html'
+    success_url = reverse_lazy('classroom_view')
+    permission_required = 'ecweb.view_all_classrooms'
+    fields = (
+        'number_class',
+        'level',
+        'students',
+        'teachers',
+        'turn'
+    )
 
 @login_required
 def classes_view(request):
