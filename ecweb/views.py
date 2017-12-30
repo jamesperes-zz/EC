@@ -135,7 +135,8 @@ class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         'number_class',
         'level',
         'students',
-        'teachers'
+        'teachers',
+        'turn'
     )
 
 
