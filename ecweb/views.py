@@ -10,6 +10,7 @@ from django.views.generic import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
+from django.http import HttpResponseRedirect
 
 from .forms import PhotoForm, AttendanceForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
