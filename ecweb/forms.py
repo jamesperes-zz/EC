@@ -6,7 +6,11 @@ from django.core.files import File
 
 
 class CreateUserForm(forms.ModelForm):
-    confirm_password = forms.CharField(label='Confirm Password', max_length=128)
+    confirm_password = forms.CharField(
+        label='Confirm Password',
+        max_length=128,
+        widget=forms.PasswordInput()
+    )
 
     class Meta:
         model = BasicUser
@@ -16,20 +20,18 @@ class CreateUserForm(forms.ModelForm):
             'password', 'confirm_password'
         ]
         widgets = {
-            'password': forms.PasswordInput(),
-            'confirm_password': forms.PasswordInput()
+            'password': forms.PasswordInput()
         }
 
-    def clean(self):
-        cleaned_data = super(CreateUserFormAdmin, self).clean()
-        password = cleaned_data['password']
-        confirm_password = cleaned_data['confirm_password']
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
         if password != confirm_password:
-            return forms.ValidationError("Passwords don't match")
-        return cleaned_data
+            raise forms.ValidationError("Passwords don't match")
+        return super(CreateUserForm, self).clean()
 
     def save(self, commit=True):
-        user = super(CreateUserFormAdmin, self).save(commit=False)
+        user = super(CreateUserForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
