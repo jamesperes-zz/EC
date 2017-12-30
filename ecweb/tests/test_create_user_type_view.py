@@ -7,6 +7,7 @@ from ecweb.models import (
     Teacher,
     Coordinator
 )
+from ecweb.forms import CreateUserForm
 
 
 class TestCreateUserTypeView(TestCase):
@@ -60,6 +61,12 @@ class TestCreateUserTypeView(TestCase):
             self.resp_coordinator, 'registration/create_user.html')
         self.assertTemplateUsed(
             self.resp_teacher, 'registration/create_user.html')
+
+    def test_forms_used(self):
+        coordinatorform = self.resp_coordinator.context['form']
+        teacherform = self.resp_teacher.context['form']
+        self.assertIsInstance(coordinatorform, CreateUserForm)
+        self.assertIsInstance(teacherform, CreateUserForm)
 
     def test_create_object_type_coordinator(self):
         self._test_create_object(

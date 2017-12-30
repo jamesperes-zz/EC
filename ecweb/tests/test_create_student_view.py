@@ -7,7 +7,7 @@ from ecweb.models import (
     Teacher,
     Coordinator
 )
-
+from ecweb.forms import CreateUserForm, StudentForm
 
 class TestCreateStudentView(TestCase):
     """ Testing createuser system """
@@ -44,6 +44,12 @@ class TestCreateStudentView(TestCase):
             self.response,
             'registration/create_student.html'
         )
+
+    def test_forms_used(self):
+        userform = self.response.context['userform']
+        studentform = self.response.context['studentform']
+        self.assertIsInstance(userform, CreateUserForm)
+        self.assertIsInstance(studentform, StudentForm)
 
     def test_create_object(self):
         response = self.client.post(self.url, self.data)
