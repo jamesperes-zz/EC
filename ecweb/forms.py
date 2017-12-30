@@ -2,32 +2,49 @@ from django import forms
 from django.contrib.auth import forms as auth_forms
 from .models import BasicUser, Student
 from PIL import Image
-from django.core.files import File
 
 
-class CreateUserFormAdmin(forms.ModelForm):
+class CreateUserForm(forms.ModelForm):
+    confirm_password = forms.CharField(
+        label='Confirm Password',
+        max_length=128,
+        widget=forms.PasswordInput()
+    )
 
     class Meta:
         model = BasicUser
         fields = [
             'avatar', 'first_name',
-            'last_name', 'email', 'password',
-            'date_joined',
-            'is_active', 'is_staff'
+            'last_name', 'email',
+            'password', 'confirm_password'
         ]
         widgets = {
             'password': forms.PasswordInput()
         }
 
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password != confirm_password:
+            raise forms.ValidationError("Passwords don't match")
+        return super(CreateUserForm, self).clean()
+
     def save(self, commit=True):
-        user = super(CreateUserFormAdmin, self).save(commit=False)
+        user = super(CreateUserForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
         return user
 
 
-class UpdateUserFormAdmin(CreateUserFormAdmin):
+class StudentForm(forms.ModelForm):
+
+    class Meta:
+        model = Student
+        fields = ['cod', 'type_of_course']
+
+
+class UpdateUserFormAdmin(CreateUserForm):
     password = auth_forms.ReadOnlyPasswordHashField(
         label=("Password"),
         help_text=(
@@ -49,7 +66,8 @@ class PhotoForm(forms.ModelForm):
         fields = ('avatar', 'x', 'y', 'width', 'height', )
         widgets = {
             'avatar': forms.FileInput(attrs={
-                'accept': 'image/*'  # this is not an actual validation! don't rely on that!
+                # this is not an actual validation! don't rely on that!
+                'accept': 'image/*'
             })
         }
 
@@ -70,5 +88,7 @@ class PhotoForm(forms.ModelForm):
 
 
 class AttendanceForm(forms.Form):
-    class_id = forms.CharField(label='Class id', max_length=100, widget=forms.HiddenInput())
-    students = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(), required=False)
+    class_id = forms.CharField(
+        label='Class id', max_length=100, widget=forms.HiddenInput())
+    students = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple(), required=False)

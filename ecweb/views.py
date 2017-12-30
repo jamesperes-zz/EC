@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
+from django.urls import reverse as r
 from django.contrib.auth.decorators import login_required
 from datetime import date
 
@@ -9,9 +10,51 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 
 from django.contrib.auth import logout
-
-from .forms import PhotoForm, AttendanceForm
+from .forms import PhotoForm, AttendanceForm, CreateUserForm, StudentForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
+
+
+@login_required
+def create_user_type_view(request, user_type):
+    template_name = 'registration/create_user.html'
+    types = ('coordinator', 'teacher')
+    if user_type not in types:
+        raise Http404
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            if user_type == 'coordinator':
+                Coordinator.objects.create(user=user)
+            elif user_type == 'teacher':
+                Teacher.objects.create(user=user)
+            return redirect(r('home_dashboard'))
+    else:
+        form = CreateUserForm()
+    context = {'form': form}
+    return render(request, template_name, context)
+
+
+@login_required
+def create_student_view(request):
+    template_name = 'registration/create_student.html'
+    if request.method == 'POST':
+        userform = CreateUserForm(request.POST)
+        studentform = StudentForm(request.POST)
+        if userform.is_valid() and studentform.is_valid():
+            user = userform.save()
+            student = studentform.save(commit=False)
+            student.user = user
+            student.save()
+            return redirect(r('home_dashboard'))
+    else:
+        userform = CreateUserForm()
+        studentform = StudentForm()
+    context = {
+        'userform': userform,
+        'studentform': studentform
+    }
+    return render(request, template_name, context)
 
 
 @login_required
@@ -133,11 +176,12 @@ def classroom_view(request):
     if user:
         student = Student.objects.get(user=current_user.id)
         classroom = ClassRoom.objects.filter(students=student.id)
-
-    return render(request, 'ecweb/classroom.html', {'current_user': current_user,
-                                                    'classrooms': classroom,
-                                                    })
-
+    
+    context = {
+        'current_user': current_user,
+        'classrooms': classroom,
+    }
+    return render(request, 'ecweb/classroom.html', context)
 
 @login_required
 def list_classes_view(request, class_room_id):
@@ -156,9 +200,12 @@ def list_classes_view(request, class_room_id):
     if user:
         student = Student.objects.get(user=current_user.id)
         all_classes = Class.objects.filter(classroom__students=student.id)
-
-    return render(request, 'ecweb/classes.html', {'all_classes': all_classes,
-                                                  'current_user': current_user})
+        
+    context = {
+        'all_classes': all_classes,
+        'current_user': current_user
+    }
+    return render(request, 'ecweb/classes.html', context)
 
 
 @login_required
@@ -192,5 +239,10 @@ def class_view(request, class_id):
             initial={'class_id': class_id, 'students': attendanced_students})
         form.fields['students'].choices = tuple(choices_student)
 
-    return render(request, 'ecweb/class_attendance.html',
-                  {'form': form, 'current_user': current_user, 'class_id': class_id, 'class_obj': class_obj})
+    context = {
+        'form': form,
+        'current_user': current_user,
+        'class_id': class_id,
+        'class_obj': class_obj
+    }
+    return render(request, 'ecweb/class_attendance.html', context)
