@@ -32,7 +32,7 @@ class TestCreateStudentView(TestCase):
             username='admin_test@admin.com',
             password='1234abc'
         )
+        self.response = self.client.get(self.url)
 
     def test_get_response_status(self):
-        response = self.client.get(self.url)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(200, self.response.status_code)
