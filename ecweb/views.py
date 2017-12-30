@@ -15,7 +15,7 @@ from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
 
 
 @login_required
-def create_user_view(request, user_type):
+def create_user_type_view(request, user_type):
     template_name = 'registration/create_user.html'
     types = ('coordinator', 'teacher')
     if user_type not in types:
