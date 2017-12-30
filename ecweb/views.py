@@ -9,7 +9,7 @@ from django.contrib.auth import logout
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 
 from .forms import PhotoForm, AttendanceForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
@@ -149,6 +149,20 @@ class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
         'teachers',
         'turn'
     )
+
+class ClassRoomDeactivateView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = ClassRoom
+    template_name = 'ecweb/classroom/classroom_confirm_delete.html'
+    success_url = reverse_lazy('classroom_view')
+    permission_required = 'ecweb.view_all_classrooms'
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.is_active = False
+        self.object.save()
+
+        return HttpResponseRedirect(success_url)
 
 @login_required
 def classes_view(request):
