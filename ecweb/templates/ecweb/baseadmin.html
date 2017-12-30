@@ -27,7 +27,7 @@
 
           <ul class="navbar-nav ml-lg-auto d-flex align-items-center flex-row">
             <li class="nav-item">
-              <a class="nav-link profile-pic" href="#"><img class="rounded-circle" src="{{ current_user.avatar.url}}" alt=""></a>
+              <a class="nav-link profile-pic" href="#"><img class="rounded-circle" src="{{ user.avatar.url}}" alt=""></a>
             </li>
             <li class="nav-item align-self-center">
               <br><a href="/logout" style="text-decoration:none"><p class="designation">Logout</p></a>
@@ -43,9 +43,9 @@
         <div class="row row-offcanvas row-offcanvas-right">
           <nav class="bg-white sidebar sidebar-fixed sidebar-offcanvas" id="sidebar">
             <div class="user-info">
-              <img src="{{ current_user.avatar.url}}" alt="">
+              <img src="{{ user.avatar.url}}" alt="">
               <a href="/student">
-              <p class="name" >{{current_user.first_name}}</p>
+              <p class="name" >{{user.first_name}}</p>
               </a>
               {% block user_title %}{% endblock %}
 
@@ -75,7 +75,7 @@
                       <span class="menu-title">Grades</span>
                     </a>
                 </li>
-                {% if current_user.is_staff == True%}
+                {% if user.is_staff == True%}
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                       <!-- <i class="fa fa-calculator"></i> -->
