@@ -4,6 +4,7 @@ from .models import BasicUser, Student
 from PIL import Image
 from django.core.files import File
 
+
 class CreateUserForm(forms.ModelForm):
     confirm_password = forms.CharField(
         label='Confirm Password',
@@ -35,6 +36,13 @@ class CreateUserForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class StudentForm(forms.ModelForm):
+
+    class Meta:
+        model = Student
+        fields = ['cod', 'type_of_course']
 
 
 class UpdateUserFormAdmin(CreateUserForm):
