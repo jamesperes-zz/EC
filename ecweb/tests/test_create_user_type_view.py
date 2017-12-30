@@ -41,13 +41,25 @@ class TestCreateUserTypeView(TestCase):
             password='1234abc'
         )
 
+        self.resp_teacher = self.client.get(
+            self.url_teacher
+        )
+
+        self.resp_coordinator = self.client.get(
+            self.url_coordinator
+        )
+
     def test_response_status_with_type_coordinator(self):
-        response = self.client.get(self.url_coordinator)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(200, self.resp_coordinator.status_code)
 
     def test_response_status_with_type_teacher(self):
-        response = self.client.get(self.url_teacher)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(200, self.resp_teacher.status_code)
+
+    def test_template_used(self):
+        self.assertTemplateUsed(
+            self.resp_coordinator, 'registration/create_user.html')
+        self.assertTemplateUsed(
+            self.resp_teacher, 'registration/create_user.html')
 
     def test_create_object_type_coordinator(self):
         self._test_create_object(
