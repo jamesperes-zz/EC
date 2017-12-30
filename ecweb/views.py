@@ -176,18 +176,31 @@ def classroom_view(request):
     if user:
         student = Student.objects.get(user=current_user.id)
         classroom = ClassRoom.objects.filter(students=student.id)
-
+    
     context = {
         'current_user': current_user,
         'classrooms': classroom,
     }
     return render(request, 'ecweb/classroom.html', context)
 
-
 @login_required
-def classes_view(request):
-    all_classes = Class.objects.all()
+def list_classes_view(request, class_room_id):
+
     current_user = request.user
+    user = Coordinator.objects.filter(user__id=current_user.id)
+    if user:
+        all_classes = Class.objects.filter(classroom=class_room_id)
+
+    user = Teacher.objects.filter(user__id=current_user.id)
+    if user:
+        teacher = Teacher.objects.get(user=current_user.id)
+        all_classes = Class.objects.filter(classroom__teachers=teacher.id)
+
+    user = Student.objects.filter(user__id=current_user.id)
+    if user:
+        student = Student.objects.get(user=current_user.id)
+        all_classes = Class.objects.filter(classroom__students=student.id)
+        
     context = {
         'all_classes': all_classes,
         'current_user': current_user
