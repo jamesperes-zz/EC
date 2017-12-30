@@ -19,6 +19,14 @@
 		a.btn.btn-teacher:hover {
 			background-color: #1d608a;
 		}
+		a.btn.btn-student {
+			background-color: #238484;
+			color: white;
+			font-weight: bold;
+		}
+		a.btn.btn-student:hover {
+			background-color: #59bfbf;
+		}
 
 		.row.buttons {
 			margin-bottom: 10px;
@@ -43,6 +51,12 @@
 	    <a class="btn btn-teacher" 
 	    	href="{% url 'create-user' user_type='teacher' %}">
 	    		Create a Teacher
+	    </a>
+	</div>
+	<div class="row buttons">
+	    <a class="btn btn-student" 
+	    	href="{% url 'create-student' %}">
+	    		Create a Student
 	    </a>
 	</div>
 </div>
