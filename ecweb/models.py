@@ -75,6 +75,7 @@ class ClassRoom(models.Model):
     teachers = models.ManyToManyField(Teacher)
     turn = models.CharField(max_length=50, choices=classroom_turns_choices)
     slug = models.SlugField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.__str__())
