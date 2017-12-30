@@ -69,7 +69,7 @@ class Coordinator(models.Model):
 
 
 class ClassRoom(models.Model):
-    number_class = models.IntegerField(blank=True)
+    number_class = models.PositiveIntegerField(blank=True)
     level = models.CharField(max_length=30, choices=level_choices, blank=True)
     students = models.ManyToManyField(Student)
     teachers = models.ManyToManyField(Teacher)
@@ -82,7 +82,7 @@ class ClassRoom(models.Model):
         super(ClassRoom, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '{}: {} - {}'.format(self.number_class, self.level, self.turn)
+        return '{}: {} - {}'.format(self.level, self.turn, self.number_class)
 
 
 
