@@ -63,6 +63,25 @@ class TestCreateUserTypeView(TestCase):
             model=Teacher,
         )
 
+    def test_form_password_validation_on_teacher_post(self):
+        self._test_password_validation(
+            data=self.data_teacher,
+            url=self.url_teacher
+        )
+
+    def test_form_password_validation_on_coordinator_post(self):
+        self._test_password_validation(
+            data=self.data_coordinator,
+            url=self.url_coordinator
+        )
+
+    def _test_password_validation(self, data, url):
+        data['confirm_password'] = '789010abc'
+        response = self.client.post(url, data)
+        form = response.context['form']
+        self.assertTrue(form.errors)
+        self.assertIn("Passwords don't match", form.errors['confirm_password'])
+
     def _test_create_object(self, data, model, url):
         response = self.client.post(url, data)
         instance = model.objects.get(
