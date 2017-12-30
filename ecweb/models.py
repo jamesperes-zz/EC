@@ -82,7 +82,7 @@ class ClassRoom(models.Model):
         super(ClassRoom, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '{}: {}'.format(self.number_class, self.level)
+        return '{}: {} - {}'.format(self.number_class, self.level, self.turn)
 
 
 
