@@ -9,10 +9,10 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 
-from django.contrib.auth import logout, login as auth_login
-
+from django.contrib.auth import logout
 from .forms import PhotoForm, AttendanceForm, CreateUserForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
+
 
 @login_required
 def create_user_view(request):
@@ -21,11 +21,19 @@ def create_user_view(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect(r('home_dashboard'))
+            return redirect(r('create-coodinator', kwargs={'pk': user.pk}))
     else:
         form = CreateUserForm()
     context = {'form': form}
     return render(request, template_name, context)
+
+
+@login_required
+def create_coodinator_view(request, pk):
+    user = get_object_or_404(BasicUser, pk=pk)
+    Coordinator.objects.create(user=user)
+    return redirect(r('home_dashboard'))
+
 
 @login_required
 def home_dashboard(request):
