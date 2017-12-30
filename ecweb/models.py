@@ -8,6 +8,7 @@ from .utils.li import (
     classroom_turns_choices
 )
 from django.utils.text import slugify
+from django.urls import reverse
 from django.contrib.auth.models import Permission
 
 
@@ -80,6 +81,9 @@ class ClassRoom(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.__str__())
         super(ClassRoom, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('classroom_detail_view', kwargs={'slug': self.slug})
 
     def __str__(self):
         return '{}: {} - {}'.format(self.level, self.turn, self.number_class)
