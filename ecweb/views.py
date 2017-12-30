@@ -10,7 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 
 from django.contrib.auth import logout
-from .forms import PhotoForm, AttendanceForm, CreateUserForm
+from .forms import PhotoForm, AttendanceForm, CreateUserForm, StudentForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
 
 
@@ -33,6 +33,28 @@ def create_user_view(request, user_type):
     else:
         form = CreateUserForm()
     context = {'form': form}
+    return render(request, template_name, context)
+
+
+@login_required
+def create_student_view(request):
+    template_name = 'registration/create_student.html'
+    if request.method == 'POST':
+        userform = CreateUserForm(request.POST)
+        studentform = StudentForm(request.POST)
+        if userform.is_valid() and studentform.is_valid():
+            user = userform.save()
+            student = studentform.save(commit=False)
+            student.user = user
+            student.save()
+            return redirect(r('home_dashboard'))
+    else:
+        userform = CreateUserForm()
+        studentform = StudentForm()
+    context = {
+        'userform': userform,
+        'studentform': studentform
+    }
     return render(request, template_name, context)
 
 

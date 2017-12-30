@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.home_dashboard),
     url(r'^dashboard/', views.home_dashboard, name='home_dashboard'),
+    url(r'^create-student/$', views.create_student_view, name='create-student'),
     url(r'^create-user/(?P<user_type>[-\w]+)/$', views.create_user_view, name='create-user'),
     url(r'^student/', views.user_detail, name='user_detail'),
     url(r'^classroom/$', views.classroom_view, name='classroom_view'),
