@@ -15,30 +15,25 @@ from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
 
 
 @login_required
-def create_user_view(request, redirect_url):
+def create_user_view(request, user_type):
     template_name = 'registration/create_user.html'
+    types = ('coordinator', 'teacher')
+    if user_type not in types:
+        raise Http404
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect(r(redirect_url, kwargs={'pk': user.pk}))
+            if user_type == 'coordinator':
+                print('passou!')
+                Coordinator.objects.create(user=user)
+            elif user_type == 'teacher':
+                Teacher.objects.create(user=user)
+            return redirect(r('home_dashboard'))
     else:
         form = CreateUserForm()
     context = {'form': form}
     return render(request, template_name, context)
-
-
-@login_required
-def create_coodinator_view(request, pk):
-    user = get_object_or_404(BasicUser, pk=pk)
-    Coordinator.objects.create(user=user)
-    return redirect(r('home_dashboard'))
-
-@login_required
-def create_teacher_view(request, pk):
-    user = get_object_or_404(BasicUser, pk=pk)
-    Teacher.objects.create(user=user)
-    return redirect(r('home_dashboard'))
 
 
 @login_required
