@@ -10,7 +10,7 @@
     {% for message in messages %}
         {{ message }}
     {% endfor %}
-    <h3 class="text-primary mb-3">{{object.level}} - {{object.number_class}}</h3>
+    <h3 class="text-primary mb-3">{{object.level}} - {{object.number_class}} ({{object.turn}}) </h3>
     <p>
       {% if perms.ecweb.view_all_classrooms %}
         <a href="{% url 'classroom_update_view' slug=object.slug %}" class="btn btn-info">Update</a>
