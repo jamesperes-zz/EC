@@ -14,7 +14,6 @@ from django.contrib.auth import logout, login as auth_login
 from .forms import PhotoForm, AttendanceForm, CreateUserForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
 
-
 @login_required
 def create_user_view(request):
     template_name = 'registration/create_user.html'
@@ -22,13 +21,11 @@ def create_user_view(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            auth_login(request, user)
             return redirect(r('home_dashboard'))
     else:
         form = CreateUserForm()
     context = {'form': form}
     return render(request, template_name, context)
-
 
 @login_required
 def home_dashboard(request):
