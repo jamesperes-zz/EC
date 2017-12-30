@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth import forms as auth_forms
 from .models import BasicUser, Student
 from PIL import Image
-from django.core.files import File
 
 
 class CreateUserForm(forms.ModelForm):
@@ -67,7 +66,8 @@ class PhotoForm(forms.ModelForm):
         fields = ('avatar', 'x', 'y', 'width', 'height', )
         widgets = {
             'avatar': forms.FileInput(attrs={
-                'accept': 'image/*'  # this is not an actual validation! don't rely on that!
+                # this is not an actual validation! don't rely on that!
+                'accept': 'image/*'
             })
         }
 

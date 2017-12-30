@@ -1,13 +1,12 @@
 from django.test import TestCase
 from django.shortcuts import resolve_url as r
 from ecweb.models import (
-    ClassRoom,
     BasicUser,
     Student,
-    Teacher,
     Coordinator
 )
 from ecweb.forms import CreateUserForm, StudentForm
+
 
 class TestCreateStudentView(TestCase):
     """ Testing createuser system """
@@ -64,4 +63,7 @@ class TestCreateStudentView(TestCase):
         response = self.client.post(self.url, self.data)
         userform = response.context['userform']
         self.assertTrue(userform.errors)
-        self.assertIn("Passwords don't match", userform.errors['confirm_password'])
+        self.assertIn(
+            "Passwords don't match",
+            userform.errors['confirm_password']
+        )

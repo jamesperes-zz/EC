@@ -178,18 +178,22 @@ def classroom_view(request):
         student = Student.objects.get(user=current_user.id)
         classroom = ClassRoom.objects.filter(students=student.id)
 
-    return render(request, 'ecweb/classroom.html', {'current_user': current_user,
-                                                    'classrooms': classroom,
-                                                    })
+    context = {
+        'current_user': current_user,
+        'classrooms': classroom,
+    }
+    return render(request, 'ecweb/classroom.html', context)
 
 
 @login_required
 def classes_view(request):
     all_classes = Class.objects.all()
     current_user = request.user
-
-    return render(request, 'ecweb/classes.html', {'all_classes': all_classes,
-                                                  'current_user': current_user})
+    context = {
+        'all_classes': all_classes,
+        'current_user': current_user
+    }
+    return render(request, 'ecweb/classes.html', context)
 
 
 @login_required
@@ -223,5 +227,10 @@ def class_view(request, class_id):
             initial={'class_id': class_id, 'students': attendanced_students})
         form.fields['students'].choices = tuple(choices_student)
 
-    return render(request, 'ecweb/class_attendance.html',
-                  {'form': form, 'current_user': current_user, 'class_id': class_id, 'class_obj': class_obj})
+    context = {
+        'form': form,
+        'current_user': current_user,
+        'class_id': class_id,
+        'class_obj': class_obj
+    }
+    return render(request, 'ecweb/class_attendance.html', context)
