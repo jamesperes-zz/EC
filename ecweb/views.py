@@ -15,13 +15,13 @@ from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
 
 
 @login_required
-def create_user_view(request):
+def create_user_view(request, redirect_url):
     template_name = 'registration/create_user.html'
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect(r('create-coodinator', kwargs={'pk': user.pk}))
+            return redirect(r(redirect_url, kwargs={'pk': user.pk}))
     else:
         form = CreateUserForm()
     context = {'form': form}
@@ -32,6 +32,12 @@ def create_user_view(request):
 def create_coodinator_view(request, pk):
     user = get_object_or_404(BasicUser, pk=pk)
     Coordinator.objects.create(user=user)
+    return redirect(r('home_dashboard'))
+
+@login_required
+def create_teacher_view(request, pk):
+    user = get_object_or_404(BasicUser, pk=pk)
+    Teacher.objects.create(user=user)
     return redirect(r('home_dashboard'))
 
 
