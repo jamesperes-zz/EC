@@ -36,7 +36,7 @@ class CreateUserForm(forms.ModelForm):
         return user
 
 
-class UpdateUserFormAdmin(CreateUserFormAdmin):
+class UpdateUserFormAdmin(CreateUserForm):
     password = auth_forms.ReadOnlyPasswordHashField(
         label=("Password"),
         help_text=(
