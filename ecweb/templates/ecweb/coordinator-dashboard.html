@@ -2,6 +2,16 @@
 {% load staticfiles %}
 
 {% block head %}
+	<style type="text/css">
+		a.btn.btn-coodinator {
+			background-color: #005890;
+			color: white;
+			font-weight: bold;
+		}
+		a.btn.btn-coodinator:hover {
+			background-color: #2b82ba;
+		}
+	</style>
 {% endblock %}
 
 {% block js %}
@@ -9,11 +19,8 @@
 
 {% block content %}
 <div class="content-wrapper">
-
     <h3 class="text-primary mb-4">Coordinator's Dashboard</h3>
-    <div class="row">
-        <p>I'm a coordinator</p>
-    </div>
+    <a class="btn btn-coodinator" href="{% url 'create-user' %}">Create a Coordinator</<a>
 </div>
 <footer class="footer">
     <div class="container-fluid clearfix">

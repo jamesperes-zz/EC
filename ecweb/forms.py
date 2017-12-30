@@ -4,7 +4,6 @@ from .models import BasicUser, Student
 from PIL import Image
 from django.core.files import File
 
-
 class CreateUserForm(forms.ModelForm):
     confirm_password = forms.CharField(
         label='Confirm Password',
