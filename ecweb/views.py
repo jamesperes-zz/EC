@@ -124,6 +124,9 @@ class ClassRoomDetailView(LoginRequiredMixin, DetailView):
         if not (student_in_classroom or teacher_in_classroom or is_coordinator):
             return redirect('classroom_view')
 
+        if not classroom.is_active:
+            return redirect('classroom_view')
+
         return super(ClassRoomDetailView, self).dispatch(request, *args, **kwargs)
 
 class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
