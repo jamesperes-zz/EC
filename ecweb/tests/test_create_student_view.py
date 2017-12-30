@@ -22,9 +22,11 @@ class TestCreateStudentView(TestCase):
         self.data = {
             'first_name': 'admin',
             'last_name': 'test',
-            'email': 'admin_test@test.com',
+            'email': 'admin_test3@test.com',
             'password': '123456ab',
-            'confirm_password': '123456ab'
+            'confirm_password': '123456ab',
+            'cod': 1,
+            'type_of_course': '1-month'
         }
         self.url = r('create-student')
 
@@ -42,3 +44,18 @@ class TestCreateStudentView(TestCase):
             self.response,
             'registration/create_student.html'
         )
+
+    def test_create_object(self):
+        response = self.client.post(self.url, self.data)
+        student = Student.objects.get(
+            user__email=self.data['email']
+        )
+        self.assertIsInstance(student, Student)
+        self.assertRedirects(response, r('home_dashboard'))
+
+    def test_password_validation(self):
+        self.data['confirm_password'] = '789010abc'
+        response = self.client.post(self.url, self.data)
+        userform = response.context['userform']
+        self.assertTrue(userform.errors)
+        self.assertIn("Passwords don't match", userform.errors['confirm_password'])

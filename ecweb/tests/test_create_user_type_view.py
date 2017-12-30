@@ -22,7 +22,7 @@ class TestCreateUserTypeView(TestCase):
         self.data_coordinator = {
             'first_name': 'admin',
             'last_name': 'test',
-            'email': 'admin_test@test.com',
+            'email': 'admin_test2@test.com',
             'password': '123456ab',
             'confirm_password': '123456ab'
         }
