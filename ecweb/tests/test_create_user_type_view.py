@@ -31,3 +31,11 @@ class TestCreateUserTypeView(TestCase):
             username='admin_test@admin.com',
             password='1234abc'
         )
+
+    def test_response_status_with_type_coordinator(self):
+        response = self.client.get(self.url_coordinator)
+        self.assertEqual(200, response.status_code)
+
+    def test_response_status_with_type_teacher(self):
+        response = self.client.get(self.url_teacher)
+        self.assertEqual(200, response.status_code)
