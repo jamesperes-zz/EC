@@ -36,3 +36,9 @@ class TestCreateStudentView(TestCase):
 
     def test_get_response_status(self):
         self.assertEqual(200, self.response.status_code)
+
+    def test_template_used(self):
+        self.assertTemplateUsed(
+            self.response,
+            'registration/create_student.html'
+        )
