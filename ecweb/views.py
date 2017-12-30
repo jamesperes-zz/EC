@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
+from django.urls import reverse as r
 from django.contrib.auth.decorators import login_required
 from datetime import date
 
@@ -8,10 +9,25 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
 
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login as auth_login
 
-from .forms import PhotoForm, AttendanceForm
+from .forms import PhotoForm, AttendanceForm, CreateUserForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
+
+
+@login_required
+def create_user_view(request):
+    template_name = 'registration/create_user.html'
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect(r('home_dashboard'))
+    else:
+        form = CreateUserForm()
+    context = {'form': form}
+    return render(request, template_name, context)
 
 
 @login_required
@@ -133,7 +149,6 @@ def classroom_view(request):
     if user:
         student = Student.objects.get(user=current_user.id)
         classroom = ClassRoom.objects.filter(students=student.id)
-
 
     return render(request, 'ecweb/classroom.html', {'current_user': current_user,
                                                     'classrooms': classroom,
