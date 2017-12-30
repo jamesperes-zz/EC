@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^classrooms/$', views.ClassRoomListView.as_view(), name='classroom_view'),
     path('classrooms/<slug:slug>/detail', views.ClassRoomDetailView.as_view(), name='classroom_detail_view'),
     path('classrooms/<slug:slug>/edit', views.ClassRoomUpdateView.as_view(), name='classroom_update_view'),
+    path('classrooms/<slug:slug>/delete', views.ClassRoomDeactivateView.as_view(), name='classroom_delete_view'),
     url(r'^classrooms/create/$', views.ClassRoomCreateView.as_view(), name='classroom_create_view'),
     url(r'^logout/$', views.logout_view),
     url(r'^class/$', views.classes_view, name='classes_views'),
