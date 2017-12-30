@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from django.contrib.auth.models import Permission
 
 from django.contrib.auth import logout
 from django.views.generic import CreateView
@@ -129,7 +130,7 @@ class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
     model = ClassRoom
     template_name = 'ecweb/classroom/create_classroom.html'
     success_url = reverse_lazy('classroom_view')
-    permission_required = 'view_all_classrooms'
+    permission_required = 'ecweb.view_all_classrooms'
     fields = (
         'number_class',
         'level',
