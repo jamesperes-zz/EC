@@ -61,7 +61,7 @@ NOSE_ARGS = [
     '--with-coverage',
     '--cover-erase',
     '--cover-inclusive',
-    '--cover-package=ecweb,EC',
+    '--cover-package=ecweb',
 ]
 
 ROOT_URLCONF = 'EC.urls'
