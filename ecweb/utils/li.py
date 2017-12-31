@@ -1,7 +1,7 @@
 """ List of CHOICES"""
 
 
-nivel_list = (
+level_choices = (
     ('Beginner', 'Beginner'),
     ('Elementary', 'Elementary'),
 )
@@ -10,4 +10,14 @@ nivel_list = (
 type_list = (
     ('1-month', '1-month'),
     ('6-month', '6-month'),
+)
+
+test_choices = (
+    ('listening', 'Listening'),
+    ('reading', 'Reading'),
+)
+
+classroom_turns_choices = (
+    ('morning', 'Morning'),
+    ('afternoon', 'Afternoon')
 )

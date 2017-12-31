@@ -45,9 +45,6 @@
 {% endblock %}
 
 {% block content %}
- 
-
-                
                 <div class="content-wrapper">
 
                     <h3 class="text-primary mb-4">Student Dashboard</h3>
@@ -118,35 +115,35 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th><img src="{{current_user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
+                                                <th><img src="{{student.user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
                                                         height="40" /></th>
                                                 <td>Larry</td>
                                                 <td>Verb List</td>
                                                 <td><span class="badge badge-success">PDF</span></td>
                                             </tr>
                                             <tr>
-                                                <th><img src="{{current_user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
+                                                <th><img src="{{student.user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
                                                         height="40" /></th>
                                                 <td>Jonh</td>
                                                 <td>news Donald Trump</td>
                                                 <td><span class="badge badge-danger">Link</span></td>
                                             </tr>
                                             <tr>
-                                                <th><img src="{{current_user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
+                                                <th><img src="{{student.user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
                                                         height="40" /></th>
                                                 <td>Jonh</td>
                                                 <td>Clip - RHCP</td>
                                                 <td><span class="badge badge-primary">Video</span></td>
                                             </tr>
                                             <tr>
-                                                <th><img src="{{current_user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
+                                                <th><img src="{{student.user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
                                                         height="40" /></th>
                                                 <td>Larry</td>
                                                 <td>Acer</td>
                                                 <td><span class="badge badge-success">Success</span></td>
                                             </tr>
                                             <tr>
-                                                <th><img src="{{current_user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
+                                                <th><img src="{{student.user.avatar.url}}" alt="profile" class="rounded-circle" width="40"
                                                         height="40" /></th>
                                                 <td>Larry</td>
                                                 <td>Acer</td>
@@ -170,4 +167,8 @@
         </div>
 
       </div>
+{% endblock %}
+
+{% block user_title %}
+<p class="designation">Student</p>
 {% endblock %}

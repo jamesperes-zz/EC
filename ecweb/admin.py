@@ -1,21 +1,23 @@
 from django.contrib import admin
-from .forms import CreateUserFormAdmin, UpdateUserFormAdmin
-from .models import (User, Calendar, Menssage, ClassRoom, Teacher, Student,
-                     Youtube, Pdf_file)
+from django.forms import CheckboxSelectMultiple
+
+from .forms import CreateUserForm, UpdateUserFormAdmin
+from .models import (ClassRoom, Teacher, Student, Coordinator,
+                     Youtube, PdfFile, Class, BasicUser)
 
 
-class UserAdmin(admin.ModelAdmin):
+class BasicUserAdmin(admin.ModelAdmin):
     list_display = (
-        'cod', 'first_name', 'last_name',
-        'email', 'type_of_course'
+        'first_name', 'last_name',
+        'email',
     )
     date_hierarchy = 'date_joined'
     search_fields = (
-        'first_name', 'last_name', 'email', 'cod',
-        'date_joined', 'type_of_course'
+        'first_name', 'last_name', 'email',
+        'date_joined',
     )
-    list_filter = ('type_of_course', 'date_joined',)
-    add_form = CreateUserFormAdmin
+    list_filter = ('date_joined',)
+    add_form = CreateUserForm
     form = UpdateUserFormAdmin
 
     def get_form(self, request, obj=None, **kwargs):
@@ -34,36 +36,42 @@ class MenssageAdmin(admin.ModelAdmin):
     pass
 
 
-class TeacherInline(admin.TabularInline):
-    model = Teacher
-    extra = 1
+class YoutubeAdmin(admin.ModelAdmin):
+    pass
 
 
-class StudentInline(admin.TabularInline):
-    model = Student
-    extra = 1
+class PdfFileAdmin(admin.ModelAdmin):
+    pass
 
 
-class YoutubeInline(admin.TabularInline):
-    model = Youtube
-    extra = 1
+class ClassRoomAdmin(admin.ModelAdmin):
+    pass
 
 
-class Pdf_fileInline(admin.TabularInline):
-    model = Pdf_file
-    extra = 1
+class ClassAdmin(admin.ModelAdmin):
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ClassAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['attendances'].widget = CheckboxSelectMultiple()
+        return form
+
+
+class StudentAdmin(admin.ModelAdmin):
+    pass
 
 
 class TeacherAdmin(admin.ModelAdmin):
     pass
 
 
-class ClassRoomAdmin(admin.ModelAdmin):
-    inlines = [TeacherInline, StudentInline, Pdf_fileInline, YoutubeInline]
+class CoordinatorAdmin(admin.ModelAdmin):
+    pass
 
 
-admin.site.register(User, UserAdmin)
-admin.site.register(Calendar, CalendarAdmin)
-admin.site.register(Menssage, MenssageAdmin)
+admin.site.register(BasicUser, BasicUserAdmin)
 admin.site.register(ClassRoom, ClassRoomAdmin)
 admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Youtube, YoutubeAdmin)
+admin.site.register(PdfFile, PdfFileAdmin)
+admin.site.register(Class, ClassAdmin)
+admin.site.register(Student, StudentAdmin)
+admin.site.register(Coordinator, CoordinatorAdmin)
