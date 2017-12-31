@@ -18,6 +18,7 @@ from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
 def create_user_type_view(request, user_type):
     template_name = 'registration/create_user.html'
     types = ('coordinator', 'teacher')
+    current_user = request.user
     if user_type not in types:
         raise Http404
     if request.method == 'POST':
@@ -31,13 +32,15 @@ def create_user_type_view(request, user_type):
             return redirect(r('home_dashboard'))
     else:
         form = CreateUserForm()
-    context = {'form': form}
+    context = {'form': form,
+               'current_user': current_user}
     return render(request, template_name, context)
 
 
 @login_required
 def create_student_view(request):
     template_name = 'registration/create_student.html'
+    current_user = request.user
     if request.method == 'POST':
         userform = CreateUserForm(request.POST)
         studentform = StudentForm(request.POST)
@@ -52,7 +55,8 @@ def create_student_view(request):
         studentform = StudentForm()
     context = {
         'userform': userform,
-        'studentform': studentform
+        'studentform': studentform,
+        'current_user': current_user
     }
     return render(request, template_name, context)
 
