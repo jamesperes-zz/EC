@@ -21,6 +21,7 @@ from .forms import PhotoForm, AttendanceForm, CreateUserForm, StudentForm
 from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
 
 
+
 @login_required
 def create_user_type_view(request, user_type):
     template_name = 'registration/create_user.html'
@@ -63,7 +64,7 @@ def create_student_view(request):
     }
     return render(request, template_name, context)
 
-
+  
 @login_required
 def home_dashboard(request):
     current_user = request.user
@@ -154,6 +155,7 @@ def change_password(request):
     return render(request, 'registration/change-password.html', {
         'form': form
     })
+
 
 
 def logout_view(request):
