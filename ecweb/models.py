@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 from .utils.li import (
     level_choices, 
@@ -16,7 +15,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 class BasicUser(AbstractUser):
-    email = models.EmailField(_('email address'), null=False, blank=False, unique=True)
+    email = models.EmailField(
+        _('email address'), null=False, blank=False, unique=True)
 
     username = models.CharField(
         _('username'),
@@ -36,7 +36,8 @@ class BasicUser(AbstractUser):
 class Student(models.Model):
     user = models.OneToOneField(BasicUser, on_delete=models.CASCADE)
     cod = models.IntegerField(blank=False, null=False)
-    type_of_course = models.CharField(max_length=30, choices=type_list, blank=False, null=False)
+    type_of_course = models.CharField(
+        max_length=30, choices=type_list, blank=False, null=False)
 
     def __str__(self):
         return self.user.first_name
@@ -68,7 +69,6 @@ class Coordinator(models.Model):
         return self.user.first_name
 
 
-
 class ClassRoom(models.Model):
     number_class = models.PositiveIntegerField(blank=True)
     level = models.CharField(max_length=30, choices=level_choices, blank=True)
@@ -87,7 +87,6 @@ class ClassRoom(models.Model):
 
     def __str__(self):
         return '{}: {} - {}'.format(self.level, self.turn, self.number_class)
-
 
 
 class Youtube(models.Model):

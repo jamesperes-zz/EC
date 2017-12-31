@@ -63,26 +63,8 @@ class BasicUserModelTest(TestCase):
     def test_student_exists(self):
         self.assertTrue(Student.objects.exists())
 
-    def test_create_student(self):
-        print(self.student)
-        self.assertEqual(self.basic_user.first_name, self.student.first_name)
-
     def test_is_instance_of_BasicUser(self):
         self.assertIsInstance(self.basic_user, BasicUser)
-
-    def test_str_method(self):
-        object_name = '{} {}'.format(
-            self.basic_user.first_name,
-            self.basic_user.last_name
-        )
-        self.assertEqual(object_name, str(self.basic_user))
-
-    def test_if_login_pass(self):
-        login = self.client.login(
-            email=self.student.email,
-            password="abcd1234ec"
-        )
-        self.assertTrue(login)
 
     def test_default_image_profile(self):
         avatar_image_url = self.basic_user.avatar

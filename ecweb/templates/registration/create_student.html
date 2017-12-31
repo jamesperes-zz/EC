@@ -1,0 +1,43 @@
+{% extends 'ecweb/baseadmin.html' %}
+
+{% block head %}
+	<style type="text/css">
+		form {
+			margin-top: 2em;
+			margin-bottom: 15em; 
+		}
+		.field {
+			margin-top: 10px; 
+			margin-bottom: 10px;
+		} 
+	</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid clearfix">
+	<form method="POST">
+		{% csrf_token %}
+		
+		{{ userform.non_field_errors }}
+		{{ studentform.non_field_errors }}
+
+		{% for field in userform %}
+			<div class="field">
+				{{ field.label }}:
+				{{ field }}
+				<span>{{ field.errors }}</span>
+			</div>
+		{% endfor %}
+
+		{% for field in studentform %}
+			<div class="field">
+				{{ field.label }}:
+				{{ field }}
+				<span>{{ field.errors }}</span>
+			</div>
+		{% endfor %}
+
+		<button type="submit">Salvar</button>
+	</form>
+</div>
+{% endblock %}

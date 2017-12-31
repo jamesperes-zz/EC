@@ -8,9 +8,12 @@
 {% block content %}
 <div class="content-wrapper">
   <h1>Classes</h1>
-  <h3 class="text-primary mb-4">{{classroom.nivel}} - {{classroom.number_class}}</h3>
+
   {% for class_obj in all_classes%}
+  	  <h3 class="text-primary mb-4">{{class_obj.classroom.level}} - 
+  	  
     <a href="/class/{{class_obj.id}}/attendances/">{{class_obj.date}}</a>
+    </h3>
   {% endfor %}
 </div>
 {% endblock %}
