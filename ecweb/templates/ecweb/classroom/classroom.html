@@ -1,0 +1,38 @@
+{% extends 'ecweb/baseadmin.html' %}
+{% load staticfiles %}
+
+{% block head %}{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  {% if perms.ecweb.view_all_classrooms %}
+      <a href="{% url 'classroom_create_view' %}" class="btn btn-success">
+        Create a classroom
+      </a>
+  {% endif %}
+  <p>
+    {% if perms.ecweb.view_all_classrooms %}
+        <h4 class="text-primary mb-3">All Classrooms</h4>
+    {% else %}
+      <h4 class="text-primary mb-3">
+        {% with total_classrooms=object_list.count %}
+            My Classroom{{ total_classrooms|pluralize }}
+        {% endwith %}
+      </h4>
+    {% endif %}
+  </p>
+  <div class="content-wrapper">
+    {% for classroom in object_list %}
+      <div class="row">
+        <h3 class="text-primary col-sm-1-4">
+          <a href="{% url 'classroom_detail_view' slug=classroom.slug %}">
+            {{classroom.level}} - {{classroom.turn}} - {{classroom.number_class}}
+          </a>
+        </h3>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
