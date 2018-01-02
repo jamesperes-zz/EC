@@ -2,6 +2,35 @@
 {% load staticfiles %}
 
 {% block head %}
+	<style type="text/css">
+		a.btn {
+			color: white;
+			font-weight: bold;
+		}
+		a.btn.btn-coodinator {
+			background-color: #005890;
+		}
+		a.btn.btn-coodinator:hover {
+			background-color: #2b82ba;
+		}
+		a.btn.btn-teacher {
+			background-color: #2c4a5d;
+			
+		}
+		a.btn.btn-teacher:hover {
+			background-color: #1d608a;
+		}
+		a.btn.btn-student {
+			background-color: #238484;
+		}
+		a.btn.btn-student:hover {
+			background-color: #59bfbf;
+		}
+		.row.buttons {
+			margin-bottom: 10px;
+			margin-left: 1em;
+		}
+	</style>
 {% endblock %}
 
 {% block js %}
@@ -9,11 +38,25 @@
 
 {% block content %}
 <div class="content-wrapper">
-
     <h3 class="text-primary mb-4">Coordinator's Dashboard</h3>
-    <div class="row">
-        <p>I'm a coordinator</p>
-    </div>
+    <div class="row buttons">
+	    <a class="btn btn-coodinator" 
+	    	href="{% url 'create-user' user_type='coordinator' %}">
+	    		Create a Coordinator
+	    </a>
+	</div>
+	<div class="row buttons">
+	    <a class="btn btn-teacher" 
+	    	href="{% url 'create-user' user_type='teacher' %}">
+	    		Create a Teacher
+	    </a>
+	</div>
+	<div class="row buttons">
+	    <a class="btn btn-student" 
+	    	href="{% url 'create-student' %}">
+	    		Create a Student
+	    </a>
+	</div>
 </div>
 <footer class="footer">
     <div class="container-fluid clearfix">

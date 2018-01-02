@@ -6,9 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>EC Admin</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
     <link rel="stylesheet" href="{% static '/css/libs/font-awesome.min.css' %}" />
     <link rel="stylesheet" href="{% static '/css/libs/perfect-scrollbar.min.css' %}" />
-    <link rel="stylesheet" href="{% static '/css/style.css' %}"/>
     <link rel="shortcut icon" href="{% static '/images/favicon.png' %}"/>
     {% block head %}{% endblock %}
   </head>
@@ -27,7 +27,7 @@
 
           <ul class="navbar-nav ml-lg-auto d-flex align-items-center flex-row">
             <li class="nav-item">
-              <a class="nav-link profile-pic" href="#"><img class="rounded-circle" src="{{ current_user.avatar.url}}" alt=""></a>
+              <a class="nav-link profile-pic" href="#"><img class="rounded-circle" src="{{ user.avatar.url}}" alt=""></a>
             </li>
             <li class="nav-item align-self-center">
               <br><a href="/logout" style="text-decoration:none"><p class="designation">Logout</p></a>
@@ -43,9 +43,9 @@
         <div class="row row-offcanvas row-offcanvas-right">
           <nav class="bg-white sidebar sidebar-fixed sidebar-offcanvas" id="sidebar">
             <div class="user-info">
-              <img src="{{ current_user.avatar.url}}" alt="">
+              <img src="{{ user.avatar.url}}" alt="">
               <a href="/student">
-              <p class="name" >{{current_user.first_name}}</p>
+              <p class="name" >{{user.first_name}}</p>
               </a>
               {% block user_title %}{% endblock %}
 
@@ -56,10 +56,10 @@
             </div>
             <ul class="nav">
               <li class="nav-item">
-                  <a class="nav-link" href="/class">
+                  <a class="nav-link" href="{% url 'classroom_view' %}">
                     <!-- <i class="fa fa-dashboard"></i> -->
                     <img src="{% static '/images/icons/1.png' %}" alt="">
-                    <span class="menu-title">Classes</span>
+                    <span class="menu-title">Classeroom</span>
                   </a>
               </li>
                 <li class="nav-item">
@@ -75,7 +75,7 @@
                       <span class="menu-title">Grades</span>
                     </a>
                 </li>
-                {% if current_user.is_staff == True%}
+                {% if user.is_staff == True%}
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                       <!-- <i class="fa fa-calculator"></i> -->
@@ -84,7 +84,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'classroom_view' %}">
                       <!-- <i class="fa fa-table"></i> -->
                       <img src="{% static '/images/icons/5.png' %}" alt="">
                       <span class="menu-title">Classrooms </span>

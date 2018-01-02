@@ -69,6 +69,36 @@
     });
   </script>
 
+<script type="text/javascript">
+  
+(function($) {
+
+  // $(document).ready(function() {
+  
+  'use strict';
+  
+  // find the desired selectors
+  var $btn = $('#request');
+  var $bio = $('#bio');
+  var url = "/change-password" 
+  
+  // register an event
+  $btn.on('click', function() {
+    // hide the button
+    $(this).hide();
+    // send the request and get the response
+    $bio.load(url);
+  });
+  
+    
+  
+// });
+  
+})(jQuery);
+
+</script>
+
+
 {% endblock %}
 
 {% block content %}
@@ -131,6 +161,8 @@
                     {% endif %}
                     <span class="online"></span>
                 </div>
+                <button id="request">Change password</button>
+                <div id=bio></div>
 </center>
 </div>
 {% endblock %}

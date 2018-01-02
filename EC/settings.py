@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ecweb',
+    'ecweb'
 ]
 
 MIDDLEWARE = [
@@ -104,6 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -126,3 +127,11 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/board'
 
 AUTH_USER_MODEL = 'ecweb.BasicUser'
+
+if os.environ.get("DOCKER_DEVELOPMENT"):
+    try:
+        from EC.docker_settings import *
+    except ImportError:
+        pass
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

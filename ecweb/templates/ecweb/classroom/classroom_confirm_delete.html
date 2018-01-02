@@ -1,0 +1,27 @@
+{% extends 'ecweb/baseadmin.html' %}
+{% load staticfiles %}
+
+{% block head %}{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="content-wrapper">
+        <div class="row">
+            <h2>Confirm delete the {{object}} classroom ?</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url 'classroom_detail_view' slug=object.slug %}" class="btn btn-secondary">Leave</a>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-danger" type="submit">Delete</button>
+            </div>
+        </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
