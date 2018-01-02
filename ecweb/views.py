@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse as r
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from datetime import date
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -197,10 +198,11 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
 
         return queryset
 
-class ClassRoomDetailView(LoginRequiredMixin, DetailView):
+class ClassRoomDetailView(DetailView):
     model = ClassRoom
     template_name = 'ecweb/classroom/detail_classroom.html'
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         classroom = self.get_object()
         user = request.user
