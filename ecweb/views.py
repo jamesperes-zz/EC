@@ -205,6 +205,7 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
 class ClassRoomDetailView(DetailView):
     model = ClassRoom
     template_name = 'ecweb/classroom/detail_classroom.html'
+    queryset = ClassRoom.objects.filter(is_active=True)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
@@ -243,7 +244,8 @@ class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         classroom_exists = ClassRoom.objects.filter(
             number_class=self.object.number_class,
             level=self.object.level,
-            turn=self.object.turn
+            turn=self.object.turn,
+            is_active=True
         ).exists()
 
         if classroom_exists:
@@ -277,6 +279,7 @@ class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
                 number_class=self.object.number_class,
                 level=self.object.level,
                 turn=self.object.turn,
+                is_active=True
             ).exclude(pk=self.object.pk).exists()
 
             if classroom_exists:
