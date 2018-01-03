@@ -18,8 +18,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 from django.contrib.auth import logout
 from .forms import PhotoForm, AttendanceForm, CreateUserForm, StudentForm
-from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator
-
+from .models import ClassRoom, Teacher, Student, Class, BasicUser, Coordinator,Event
 
 
 @login_required
@@ -68,7 +67,7 @@ def create_student_view(request):
     }
     return render(request, template_name, context)
 
-  
+
 @login_required
 def home_dashboard(request):
     current_user = request.user
@@ -161,7 +160,6 @@ def change_password(request):
     })
 
 
-
 def logout_view(request):
     logout(request)
     return render(request, 'registration/logout.html')
@@ -197,9 +195,11 @@ class ClassRoomListView(LoginRequiredMixin, ListView):
 
         else:
             student = Student.objects.get(user=current_user.id)
-            queryset = ClassRoom.objects.filter(students=student.id, is_active=True)
+            queryset = ClassRoom.objects.filter(
+                students=student.id, is_active=True)
 
         return queryset
+
 
 class ClassRoomDetailView(LoginRequiredMixin, DetailView):
     model = ClassRoom
@@ -220,6 +220,7 @@ class ClassRoomDetailView(LoginRequiredMixin, DetailView):
             return redirect('classroom_view')
 
         return super(ClassRoomDetailView, self).dispatch(request, *args, **kwargs)
+
 
 class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = ClassRoom
@@ -252,6 +253,7 @@ class ClassRoomCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
             return super(ClassRoomCreateView, self).form_invalid(form)
 
         return super(ClassRoomCreateView, self).form_valid(form)
+
 
 class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = ClassRoom
@@ -297,6 +299,7 @@ class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
         )
         return super(ClassRoomUpdateView, self).form_valid(form)
 
+
 class ClassRoomDeactivateView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = ClassRoom
     template_name = 'ecweb/classroom/classroom_confirm_delete.html'
@@ -310,6 +313,7 @@ class ClassRoomDeactivateView(LoginRequiredMixin, PermissionRequiredMixin, Delet
         self.object.save()
 
         return HttpResponseRedirect(success_url)
+
 
 @login_required
 def list_classes_view(request, class_room_id):
@@ -328,7 +332,7 @@ def list_classes_view(request, class_room_id):
     if user:
         student = Student.objects.get(user=current_user.id)
         all_classes = Class.objects.filter(classroom__students=student.id)
-        
+
     context = {
         'all_classes': all_classes,
         'current_user': current_user
@@ -374,3 +378,13 @@ def class_view(request, class_id):
         'class_obj': class_obj
     }
     return render(request, 'ecweb/class_attendance.html', context)
+
+
+@login_required
+def events_list_view(request):
+    current_user = request.user
+    events = Event.objects.all()
+
+    return render(request, 'ecweb/events.html',
+                  {'current_user': current_user,
+                   'events': events})

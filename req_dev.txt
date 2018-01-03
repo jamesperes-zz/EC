@@ -19,3 +19,4 @@ six==1.11.0
 traitlets==4.3.2
 wcwidth==0.1.7
 psycopg2
+geocoder==1.33.0

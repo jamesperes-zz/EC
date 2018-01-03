@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from .utils.li import (
-    level_choices, 
-    type_list, 
+    level_choices,
+    type_list,
     test_choices,
     classroom_turns_choices
 )
@@ -12,6 +12,8 @@ from django.contrib.auth.models import Permission
 
 
 from django.contrib.auth.models import AbstractUser
+
+import geocoder
 
 
 class BasicUser(AbstractUser):
@@ -138,3 +140,35 @@ class TestGrade(models.Model):
     test_event = models.ForeignKey(Test, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     grade = models.FloatField()
+
+
+class Event(models.Model):
+    description = models.TextField(max_length=500)
+    title = models.CharField(max_length=50)
+    start_event = models.DateTimeField()
+    end_event = models.DateTimeField(blank=True)
+    address = models.CharField(max_length=250)
+    neighborhood = models.CharField(max_length=250)
+    city = models.CharField(max_length=250)
+    local_lat = models.CharField(null=True, blank=True, max_length=250)
+    local_long = models.CharField(null=True, blank=True, max_length=250)
+    limit = models.IntegerField(blank=True)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    def geocoder(self):
+        end_str = '{},{},{}'.format(self.address, self.neighborhood, self.city)
+        g = geocoder.google(end_str)
+        return [g.lat, g.lng]
+
+    def update_geocode(self):
+        try:
+            self.local_lat, self.local_long = self.geocoder()
+        except:
+            self.local_lat, self.local_long = [None, None]
+
+    def save(self, *args, **kwargs):
+        self.update_geocode()
+        super(Event, self).save(*args, **kwargs)

@@ -3,7 +3,7 @@ from django.forms import CheckboxSelectMultiple
 
 from .forms import CreateUserForm, UpdateUserFormAdmin
 from .models import (ClassRoom, Teacher, Student, Coordinator,
-                     Youtube, PdfFile, Class, BasicUser)
+                     Youtube, PdfFile, Class, BasicUser, Event)
 
 
 class BasicUserAdmin(admin.ModelAdmin):
@@ -66,7 +66,11 @@ class TeacherAdmin(admin.ModelAdmin):
 class CoordinatorAdmin(admin.ModelAdmin):
     pass
 
+class EventAdmin(admin.ModelAdmin):
+    pass
 
+
+admin.site.register(Event, EventAdmin)
 admin.site.register(BasicUser, BasicUserAdmin)
 admin.site.register(ClassRoom, ClassRoomAdmin)
 admin.site.register(Teacher, TeacherAdmin)

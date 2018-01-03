@@ -1,0 +1,20 @@
+{% extends 'ecweb/baseadmin.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="content-wrapper">
+<br><br><br>Events --- <br>
+
+
+
+{% for event in events %}
+<br><br>
+        <tr>
+          <td>{{event.title}}</td>
+        </tr>
+
+        <br><br>
+{% endfor %}
+
+</div>
+{% endblock %}

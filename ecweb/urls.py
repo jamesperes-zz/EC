@@ -7,6 +7,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.home_dashboard),
     url(r'^dashboard/$', views.home_dashboard, name='home_dashboard'),
+    url(r'^events/$', views.events_list_view, name='events_list_view'),
     url(
         r'^create-student/$',
         views.create_student_view,
