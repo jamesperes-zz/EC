@@ -276,8 +276,8 @@ class ClassRoomUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
             classroom_exists = ClassRoom.objects.filter(
                 number_class=self.object.number_class,
                 level=self.object.level,
-                turn=self.object.turn
-            ).exists()
+                turn=self.object.turn,
+            ).exclude(pk=self.object.pk).exists()
 
             if classroom_exists:
                 messages.error(
