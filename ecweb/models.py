@@ -47,7 +47,8 @@ class Teacher(models.Model):
     user = models.OneToOneField(BasicUser, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        self.is_staff = True
+        self.user.is_staff = True
+        self.user.save()
 
         super(Teacher, self).save(*args, **kwargs)
 
@@ -67,7 +68,8 @@ class Coordinator(models.Model):
         permission = Permission.objects.get(codename='view_all_classrooms')
 
         self.user.user_permissions.add(permission)
-        self.is_staff = True
+        self.user.is_staff = True
+        self.user.save()
 
         super(Coordinator, self).save(*args, **kwargs)
 
