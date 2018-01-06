@@ -78,6 +78,7 @@ $ python manage.py runserver
 ### Access to django-admin
 
 login: admin@admin.com
+
 password: admin123
 
 
