@@ -91,7 +91,7 @@ class TestClassroomUpdateView(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('This field is required.', form.as_p())
 
-    def test_classroom_form_valid_does_changed(self):
+    def test_classroom_form_valid_data_not_change(self):
         response = self.client.get(self.classroom_update_url)
         data = response.context['form'].initial
 
