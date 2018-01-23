@@ -1,6 +1,8 @@
+import json
 from django.test import TestCase
 from django.urls import reverse as r
 from ecweb.models import ClassRoom, Teacher, Student, BasicUser
+from django.utils.http import urlencode
 
 
 class TestClassroomUpdateView(TestCase):
@@ -49,11 +51,11 @@ class TestClassroomUpdateView(TestCase):
 
         self.classroom = ClassRoom.objects.create(
             number_class=1,
-            level='begginner',
+            level='Beginner',
             turn='morning'
         )
-        self.classroom.students.set([student1, student2])
-        self.classroom.teachers.set([teacher])
+        self.classroom.students.add(student1, student2)
+        self.classroom.teachers.add(teacher)
 
         self.classroom_update_url = r(
             'classroom_update_view', kwargs={'slug': self.classroom.slug}
@@ -89,3 +91,20 @@ class TestClassroomUpdateView(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('This field is required.', form.as_p())
 
+    def test_classroom_form_valid_does_changed(self):
+        response = self.client.get(self.classroom_update_url)
+        data = response.context['form'].initial
+
+        data['number_class'] = self.classroom.number_class
+        data['students'] = [str(student.pk) for student in data['students']]
+        data['teachers'] = [str(teacher.pk) for teacher in data['teachers']]
+
+        response = self.client.post(
+            self.classroom_update_url,
+            data,
+            follow=True
+        )
+
+        message = list(response.context['messages'])[0]
+
+        self.assertEquals(str(message), 'The classroom does changed.')
