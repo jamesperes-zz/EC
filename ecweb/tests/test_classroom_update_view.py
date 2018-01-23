@@ -125,3 +125,31 @@ class TestClassroomUpdateView(TestCase):
         message = list(response.context['messages'])[0]
 
         self.assertEquals(str(message), 'Classroom successfully updated')
+
+    def test_classroom_form_valid_data_exists(self):
+        response = self.client.get(self.classroom_update_url)
+
+        # creating another classroom
+        ClassRoom.objects.create(
+            number_class=1,
+            level='Beginner',
+            turn='afternoon'
+        )
+
+
+        data = response.context['form'].initial
+        data['students'] = [str(student.pk) for student in data['students']]
+        data['teachers'] = [str(teacher.pk) for teacher in data['teachers']]
+
+        data['number_class'] = '1'
+        data['turn'] = 'afternoon'
+
+        response = self.client.post(
+            self.classroom_update_url,
+            data,
+            follow=True
+        )
+
+        message = list(response.context['messages'])[0]
+
+        self.assertEquals(str(message), 'This classroom already exists.')
